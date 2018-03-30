@@ -21,27 +21,9 @@ func comboCal (comboArray: [Array<Int>]) -> Int{
         combo = 0
         for h in 0...4{
             for w in 0...5{
-                switch oriA[h][w]{
-                case 0:
+                if oriA[h][w] <= 5 && oriA[h][w] >= 0{
                     (newA,combo) = w <= 3 ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: len, dir: 1, combo: combo) : (newA, combo)
                     (newA,combo) = h <= 2 ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: len, dir: 6, combo: combo) : (newA, combo)
-                case 1:
-                    (newA,combo) = w <= 3 ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: len, dir: 1, combo: combo) : (newA, combo)
-                    (newA,combo) = h <= 2 ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: len, dir: 6, combo: combo) : (newA, combo)
-                case 2:
-                    (newA,combo) = w <= 3 ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: len, dir: 1, combo: combo) : (newA, combo)
-                    (newA,combo) = h <= 2 ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: len, dir: 6, combo: combo) : (newA, combo)
-                case 3:
-                    (newA,combo) = w <= 3 ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: len, dir: 1, combo: combo) : (newA, combo)
-                    (newA,combo) = h <= 2 ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: len, dir: 6, combo: combo) : (newA, combo)
-                case 4:
-                    (newA,combo) = w <= 3 ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: len, dir: 1, combo: combo) : (newA, combo)
-                    (newA,combo) = h <= 2 ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: len, dir: 6, combo: combo) : (newA, combo)
-                case 5:
-                    (newA,combo) = w <= 3 ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: len, dir: 1, combo: combo) : (newA, combo)
-                    (newA,combo) = h <= 2 ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: len, dir: 6, combo: combo) : (newA, combo)
-                default:
-                    break
                 }
             }
         }
