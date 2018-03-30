@@ -30,9 +30,9 @@ func clearUp(originalArray: [Array<Int>]) -> [Array<Int>]
         {
             if originalArray[H][W] == originalArray[H][W1] && originalArray[H][W] == originalArray[H][W2]
             {
-                clearUpArray[H][W] =  7
-                clearUpArray[H][W1] = 7
-                clearUpArray[H][W2] = 7
+                clearUpArray[H][W] =  CLEAR_UP_BALL_NUMBER
+                clearUpArray[H][W1] = CLEAR_UP_BALL_NUMBER
+                clearUpArray[H][W2] = CLEAR_UP_BALL_NUMBER
             }
         }
         
@@ -40,9 +40,9 @@ func clearUp(originalArray: [Array<Int>]) -> [Array<Int>]
         {
             if originalArray[H][W] == originalArray[H1][W] && originalArray[H][W] == originalArray[H2][W]
             {
-                clearUpArray[H][W] = 7
-                clearUpArray[H1][W] = 7
-                clearUpArray[H2][W] = 7
+                clearUpArray[H][W] = CLEAR_UP_BALL_NUMBER
+                clearUpArray[H1][W] = CLEAR_UP_BALL_NUMBER
+                clearUpArray[H2][W] = CLEAR_UP_BALL_NUMBER
             }
         }
     }
@@ -55,7 +55,7 @@ func clearUp(originalArray: [Array<Int>]) -> [Array<Int>]
             for H in 0...3 - totalH
             {
                 let H1 = H + 1
-                if clearUpArray[H1][W] == 7
+                if clearUpArray[H1][W] == CLEAR_UP_BALL_NUMBER
                 {
                     swap(&clearUpArray[H][W], &clearUpArray[H1][W])
                 }

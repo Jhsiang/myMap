@@ -14,12 +14,12 @@ import CoreLocation
 class ViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     let fullScreenSize = UIScreen.main.bounds.size
-    var myArray3 :Array = [[0,1,2,3,4,5],
-                           [0,1,2,3,4,5],
-                           [0,1,2,3,4,5],
-                           [0,1,2,3,4,5],
-                           [0,1,2,3,4,5]]
-    var myArray: Array =  [[2, 5, 5, 4, 3, 3],
+    var myArray :Array = [[1,1,1,0,4,4],
+                          [1,1,5,1,4,4],
+                          [2,5,5,3,4,3],
+                          [2,5,5,3,4,3],
+                          [2,5,3,3,3,3]]
+    var myArray2: Array =  [[2, 5, 5, 4, 3, 3],
                            [5, 3, 4, 3, 1, 1],
                            [2, 3, 0, 2, 1, 0],
                            [4, 0, 2, 5, 5, 0],
@@ -93,7 +93,8 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         
         // 生成盤面計算
         var totalCombo:Int = comboCal(comboArray: self.myArray)
-        NSLog("self.totalCombo = \(totalCombo)")
+        NSLog("myArray combo = \(totalCombo)")
+
         
         // 清除測試
         //clearUp(originalArray: myInputArray)

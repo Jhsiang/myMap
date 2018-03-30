@@ -21,6 +21,8 @@
 		0F4D3B7D1FAAD14D00E0E67F /* GetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D3B7C1FAAD14D00E0E67F /* GetColor.swift */; };
 		0F4D3B821FAAF68600E0E67F /* ImageTransferArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D3B811FAAF68600E0E67F /* ImageTransferArray.swift */; };
 		0F4D3B841FAAF72600E0E67F /* pic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4D3B831FAAF72600E0E67F /* pic.png */; };
+		0F4E4AF5206C81C500DB9D32 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4E4AF4206C81C500DB9D32 /* Constant.swift */; };
+		0F4E4AF7206CC79600DB9D32 /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4E4AF6206CC79600DB9D32 /* Define.swift */; };
 		0FB6DD211F6A317A0035707B /* ComboCalFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6DD201F6A317A0035707B /* ComboCalFunc.swift */; };
 		0FB6DD231F6A54F80035707B /* StartRotationFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6DD221F6A54F80035707B /* StartRotationFunc.swift */; };
 /* End PBXBuildFile section */
@@ -63,6 +65,8 @@
 		0F4D3B7C1FAAD14D00E0E67F /* GetColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetColor.swift; sourceTree = "<group>"; };
 		0F4D3B811FAAF68600E0E67F /* ImageTransferArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTransferArray.swift; sourceTree = "<group>"; };
 		0F4D3B831FAAF72600E0E67F /* pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic.png; sourceTree = "<group>"; };
+		0F4E4AF4206C81C500DB9D32 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		0F4E4AF6206CC79600DB9D32 /* Define.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
 		0FB6DD201F6A317A0035707B /* ComboCalFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComboCalFunc.swift; sourceTree = "<group>"; };
 		0FB6DD221F6A54F80035707B /* StartRotationFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartRotationFunc.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,17 +124,19 @@
 			isa = PBXGroup;
 			children = (
 				0F48570B1F553ABD00E852C2 /* AppDelegate.swift */,
-				0F48EC201F5CF2C100AC0883 /* MyCollectionViewCell.swift */,
-				0F48570F1F553ABD00E852C2 /* Main.storyboard */,
-				0F4857121F553ABD00E852C2 /* Assets.xcassets */,
-				0F4857141F553ABD00E852C2 /* LaunchScreen.storyboard */,
-				0F4857171F553ABD00E852C2 /* Info.plist */,
+				0F4E4AF4206C81C500DB9D32 /* Constant.swift */,
+				0F4E4AF6206CC79600DB9D32 /* Define.swift */,
 				0F48570D1F553ABD00E852C2 /* ViewController.swift */,
+				0F4D3B811FAAF68600E0E67F /* ImageTransferArray.swift */,
+				0F48EC201F5CF2C100AC0883 /* MyCollectionViewCell.swift */,
 				0FB6DD201F6A317A0035707B /* ComboCalFunc.swift */,
 				0FB6DD221F6A54F80035707B /* StartRotationFunc.swift */,
 				0F41F07F1F6B793C002699C5 /* ClearUp.swift */,
 				0F4D3B7C1FAAD14D00E0E67F /* GetColor.swift */,
-				0F4D3B811FAAF68600E0E67F /* ImageTransferArray.swift */,
+				0F4857121F553ABD00E852C2 /* Assets.xcassets */,
+				0F48570F1F553ABD00E852C2 /* Main.storyboard */,
+				0F4857141F553ABD00E852C2 /* LaunchScreen.storyboard */,
+				0F4857171F553ABD00E852C2 /* Info.plist */,
 			);
 			path = myMap;
 			sourceTree = "<group>";
@@ -309,9 +315,11 @@
 				0F48570E1F553ABD00E852C2 /* ViewController.swift in Sources */,
 				0F4D3B821FAAF68600E0E67F /* ImageTransferArray.swift in Sources */,
 				0FB6DD211F6A317A0035707B /* ComboCalFunc.swift in Sources */,
+				0F4E4AF7206CC79600DB9D32 /* Define.swift in Sources */,
 				0F41F0801F6B793C002699C5 /* ClearUp.swift in Sources */,
 				0FB6DD231F6A54F80035707B /* StartRotationFunc.swift in Sources */,
 				0F4D3B7D1FAAD14D00E0E67F /* GetColor.swift in Sources */,
+				0F4E4AF5206C81C500DB9D32 /* Constant.swift in Sources */,
 				0F48570C1F553ABD00E852C2 /* AppDelegate.swift in Sources */,
 				0F48EC211F5CF2C100AC0883 /* MyCollectionViewCell.swift in Sources */,
 			);
