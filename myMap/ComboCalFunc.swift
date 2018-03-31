@@ -10,7 +10,6 @@ import Foundation
 
 func comboCal (comboArray: [Array<Int>]) -> Int{
 
-    let len = 3
     var newA:Array = comboArray
     var oriA:Array = comboArray
 
@@ -22,8 +21,8 @@ func comboCal (comboArray: [Array<Int>]) -> Int{
         for h in 0...4{
             for w in 0...5{
                 if oriA[h][w] <= 5 && oriA[h][w] >= 0{
-                    (newA,combo) = w <= 3 ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: len, dir: 1, combo: combo) : (newA, combo)
-                    (newA,combo) = h <= 2 ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: len, dir: 6, combo: combo) : (newA, combo)
+                    (newA,combo) = w <= (6-cleanLen) ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: cleanLen, dir: 1, combo: combo) : (newA, combo)
+                    (newA,combo) = h <= (5-cleanLen) ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: cleanLen, dir: 6, combo: combo) : (newA, combo)
                 }
             }
         }
@@ -39,20 +38,30 @@ func fillComplete(sH:Int,sW:Int,oriA:[Array<Int>],newA:[Array<Int>],len:Int,dir:
     let ballNum = oriA[sH][sW]
     var resultA = newA
     var calCombo = combo
+    var fullCondition = true
     switch dir{
     case 1:
-        if oriA[sH][sW] == oriA[sH][sW+1] && oriA[sH][sW] == oriA[sH][sW+2]{
-            if newA[sH][sW] < 60 && newA[sH][sW+1] < 60 && newA[sH][sW+2] < 60{
-                calCombo += 1
-                resultA = spread(a: resultA, startH: sH, startW: sW, ballNum: ballNum)
+        for x in 0...len-1{
+            if oriA[sH][sW] == oriA[sH][sW+x] && newA[sH][sW+x] < CLEAN_NUMBER_OF_SPREAD{
+            }else{
+                fullCondition = false
             }
         }
+        if fullCondition{
+            calCombo += 1
+            resultA = spread(a: resultA, startH: sH, startW: sW, ballNum: ballNum)
+        }
+
     case 6:
-        if oriA[sH][sW] == oriA[sH+1][sW] && oriA[sH][sW] == oriA[sH+2][sW]{
-            if newA[sH][sW] < 60 && newA[sH+1][sW] < 60 && newA[sH+2][sW] < 60{
-                calCombo += 1
-                resultA = spread(a: resultA, startH: sH, startW: sW, ballNum: ballNum)
+        for x in 0...len-1{
+            if oriA[sH][sW] == oriA[sH+x][sW] && newA[sH+x][sW] < CLEAN_NUMBER_OF_SPREAD{
+            }else{
+                fullCondition = false
             }
+        }
+        if fullCondition{
+            calCombo += 1
+            resultA = spread(a: resultA, startH: sH, startW: sW, ballNum: ballNum)
         }
     case -1:
         break
@@ -69,31 +78,31 @@ func spread(a:[Array<Int>],startH:Int,startW:Int,ballNum:Int) -> [Array<Int>]{
     var result = a
     let h = a[startH]
 
-    result[startH][startW] = ballNum + 60
+    result[startH][startW] = ballNum + CLEAN_NUMBER_OF_SPREAD
 
     if let left = h[safe:startW-1]{
         if left == ballNum{
-            result[startH][startW-1] = ballNum + 60
+            result[startH][startW-1] = ballNum + CLEAN_NUMBER_OF_SPREAD
             result = spread(a: result, startH: startH, startW: startW-1, ballNum: ballNum)
         }
     }
     if let right = h[safe:startW+1]{
         if right == ballNum{
-            result[startH][startW+1] = ballNum + 60
+            result[startH][startW+1] = ballNum + CLEAN_NUMBER_OF_SPREAD
             result = spread(a: result, startH: startH, startW: startW+1, ballNum: ballNum)
         }
     }
     if let hUp = a[safe:startH-1]{
         let up = hUp[startW]
         if up == ballNum{
-            result[startH-1][startW] = ballNum + 60
+            result[startH-1][startW] = ballNum + CLEAN_NUMBER_OF_SPREAD
             result = spread(a: result, startH: startH-1, startW: startW, ballNum: ballNum)
         }
     }
     if let hdown = a[safe:startH+1]{
         let down = hdown[startW]
         if down == ballNum{
-            result[startH+1][startW] = ballNum + 60
+            result[startH+1][startW] = ballNum + CLEAN_NUMBER_OF_SPREAD
             result = spread(a: result, startH: startH+1, startW: startW, ballNum: ballNum)
         }
     }

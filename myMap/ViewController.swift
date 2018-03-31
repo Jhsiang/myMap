@@ -19,6 +19,16 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
                           [2,5,5,3,4,3],
                           [2,5,5,3,4,3],
                           [2,5,3,3,3,3]]
+    var myArray3 :Array = [[1,1,0,0,1,1],
+                          [0,0,1,1,0,0],
+                          [1,1,0,0,1,1],
+                          [0,0,1,5,0,0],
+                          [1,1,0,0,5,1]]
+    var myArray4 :Array =  [[1,2,3,5,1,1],
+                           [1,2,3,4,0,0],
+                           [1,2,3,4,1,1],
+                           [1,2,3,4,0,0],
+                           [5,5,5,4,1,1]]
     var myArray2: Array =  [[2, 5, 5, 4, 3, 3],
                            [5, 3, 4, 3, 1, 1],
                            [2, 3, 0, 2, 1, 0],
