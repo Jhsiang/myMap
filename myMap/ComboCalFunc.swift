@@ -21,8 +21,8 @@ func comboCal (comboArray: [Array<Int>]) -> Int{
         for h in 0...4{
             for w in 0...5{
                 if oriA[h][w] <= 5 && oriA[h][w] >= 0{
-                    (newA,combo) = w <= (6-cleanLen) ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: cleanLen, dir: 1, combo: combo) : (newA, combo)
-                    (newA,combo) = h <= (5-cleanLen) ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: cleanLen, dir: 6, combo: combo) : (newA, combo)
+                    (newA,combo) = w <= (6-cleanLen) ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: cleanLen, dir: "right", combo: combo) : (newA, combo)
+                    (newA,combo) = h <= (5-cleanLen) ? fillComplete(sH: h, sW: w, oriA: oriA, newA: newA, len: cleanLen, dir: "down", combo: combo) : (newA, combo)
                 }
             }
         }
@@ -33,14 +33,14 @@ func comboCal (comboArray: [Array<Int>]) -> Int{
     return totalCombo
 }
 
-func fillComplete(sH:Int,sW:Int,oriA:[Array<Int>],newA:[Array<Int>],len:Int,dir:Int,combo:Int) -> (Array:[Array<Int>],Combo:Int){
+func fillComplete(sH:Int,sW:Int,oriA:[Array<Int>],newA:[Array<Int>],len:Int,dir:String,combo:Int) -> (Array:[Array<Int>],Combo:Int){
 
     let ballNum = oriA[sH][sW]
     var resultA = newA
     var calCombo = combo
     var fullCondition = true
     switch dir{
-    case 1:
+    case "right":
         for x in 0...len-1{
             if oriA[sH][sW] == oriA[sH][sW+x] && newA[sH][sW+x] < CLEAN_NUMBER_OF_SPREAD{
             }else{
@@ -49,10 +49,10 @@ func fillComplete(sH:Int,sW:Int,oriA:[Array<Int>],newA:[Array<Int>],len:Int,dir:
         }
         if fullCondition{
             calCombo += 1
-            resultA = spread(a: resultA, startH: sH, startW: sW, ballNum: ballNum)
+            resultA = spread(a: resultA, startH: sH, startW: sW, ballNum:   ballNum)
         }
 
-    case 6:
+    case "down":
         for x in 0...len-1{
             if oriA[sH][sW] == oriA[sH+x][sW] && newA[sH+x][sW] < CLEAN_NUMBER_OF_SPREAD{
             }else{
@@ -63,9 +63,9 @@ func fillComplete(sH:Int,sW:Int,oriA:[Array<Int>],newA:[Array<Int>],len:Int,dir:
             calCombo += 1
             resultA = spread(a: resultA, startH: sH, startW: sW, ballNum: ballNum)
         }
-    case -1:
+    case "left":
         break
-    case -6:
+    case "up":
         break
     default:
         break

@@ -14,7 +14,7 @@ import CoreLocation
 class ViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     let fullScreenSize = UIScreen.main.bounds.size
-    var myArray :Array = [[1,1,1,0,4,4],
+    var myArray2 :Array = [[1,1,1,0,4,4],
                           [1,1,5,1,4,4],
                           [2,5,5,3,4,3],
                           [2,5,5,3,4,3],
@@ -29,11 +29,11 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
                            [1,2,3,4,1,1],
                            [1,2,3,4,0,0],
                            [5,5,5,4,1,1]]
-    var myArray2: Array =  [[2, 5, 5, 4, 3, 3],
-                           [5, 3, 4, 3, 1, 1],
-                           [2, 3, 0, 2, 1, 0],
-                           [4, 0, 2, 5, 5, 0],
-                           [0, 1, 1, 2, 0, 2]]
+    var myArray: Array =  [[2,5,5,4,3,3],
+                           [5,3,4,3,1,1],
+                           [2,3,0,2,1,0],
+                           [4,0,2,5,5,0],
+                           [0,1,1,2,0,2]]
 
     // Start Array
     var noRepeatArray:Bool = true
@@ -149,8 +149,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         
     }
     
-    // MARK: - UICollectionViewDelegate
-    
+// MARK: - UICollectionViewDelegate
     // 必須實作的方法：每一組有幾個 cell
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 30
