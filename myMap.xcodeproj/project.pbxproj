@@ -18,6 +18,8 @@
 		0F48573B1F55566900E852C2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F48573A1F55566900E852C2 /* MapKit.framework */; };
 		0F48573D1F55567000E852C2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F48573C1F55567000E852C2 /* CoreLocation.framework */; };
 		0F48EC211F5CF2C100AC0883 /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F48EC201F5CF2C100AC0883 /* MyCollectionViewCell.swift */; };
+		0F4BDA1C20B5142F00DB8147 /* GenerateStartArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4BDA1B20B5142F00DB8147 /* GenerateStartArray.swift */; };
+		0F4BDA1E20B5249B00DB8147 /* RotationAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4BDA1D20B5249B00DB8147 /* RotationAlgorithm.swift */; };
 		0F4D3B7D1FAAD14D00E0E67F /* GetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D3B7C1FAAD14D00E0E67F /* GetColor.swift */; };
 		0F4D3B821FAAF68600E0E67F /* ImageTransferArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4D3B811FAAF68600E0E67F /* ImageTransferArray.swift */; };
 		0F4D3B841FAAF72600E0E67F /* pic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4D3B831FAAF72600E0E67F /* pic.png */; };
@@ -62,6 +64,8 @@
 		0F48573A1F55566900E852C2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0F48573C1F55567000E852C2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		0F48EC201F5CF2C100AC0883 /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
+		0F4BDA1B20B5142F00DB8147 /* GenerateStartArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateStartArray.swift; sourceTree = "<group>"; };
+		0F4BDA1D20B5249B00DB8147 /* RotationAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationAlgorithm.swift; sourceTree = "<group>"; };
 		0F4D3B7C1FAAD14D00E0E67F /* GetColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetColor.swift; sourceTree = "<group>"; };
 		0F4D3B811FAAF68600E0E67F /* ImageTransferArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTransferArray.swift; sourceTree = "<group>"; };
 		0F4D3B831FAAF72600E0E67F /* pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic.png; sourceTree = "<group>"; };
@@ -127,10 +131,12 @@
 				0F4E4AF4206C81C500DB9D32 /* Constant.swift */,
 				0F4E4AF6206CC79600DB9D32 /* Define.swift */,
 				0F48570D1F553ABD00E852C2 /* ViewController.swift */,
+				0F4BDA1B20B5142F00DB8147 /* GenerateStartArray.swift */,
 				0F4D3B811FAAF68600E0E67F /* ImageTransferArray.swift */,
 				0F48EC201F5CF2C100AC0883 /* MyCollectionViewCell.swift */,
 				0FB6DD201F6A317A0035707B /* ComboCalFunc.swift */,
 				0FB6DD221F6A54F80035707B /* StartRotationFunc.swift */,
+				0F4BDA1D20B5249B00DB8147 /* RotationAlgorithm.swift */,
 				0F41F07F1F6B793C002699C5 /* ClearUp.swift */,
 				0F4D3B7C1FAAD14D00E0E67F /* GetColor.swift */,
 				0F4857121F553ABD00E852C2 /* Assets.xcassets */,
@@ -317,10 +323,12 @@
 				0FB6DD211F6A317A0035707B /* ComboCalFunc.swift in Sources */,
 				0F4E4AF7206CC79600DB9D32 /* Define.swift in Sources */,
 				0F41F0801F6B793C002699C5 /* ClearUp.swift in Sources */,
+				0F4BDA1E20B5249B00DB8147 /* RotationAlgorithm.swift in Sources */,
 				0FB6DD231F6A54F80035707B /* StartRotationFunc.swift in Sources */,
 				0F4D3B7D1FAAD14D00E0E67F /* GetColor.swift in Sources */,
 				0F4E4AF5206C81C500DB9D32 /* Constant.swift in Sources */,
 				0F48570C1F553ABD00E852C2 /* AppDelegate.swift in Sources */,
+				0F4BDA1C20B5142F00DB8147 /* GenerateStartArray.swift in Sources */,
 				0F48EC211F5CF2C100AC0883 /* MyCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

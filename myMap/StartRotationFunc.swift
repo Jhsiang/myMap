@@ -17,37 +17,41 @@ func startRotation(originalArray: [Array<Int>],
                    stepTo: Int
                    ) -> ([Array<Int>],Array<Any>,Int)
 {
-    var rotationA = originalArray
+    let up = 6
+    let down = -6
+    let left = -1
+    let right = 1
+    var resultArr = originalArray
     var nowLoc = startLocation
     var directRnd:Int = 3 //must to be 0~3
     var repeatDirectRnd:Int = 8 // copy from directRnd
-    var directArray:Array = [-6,6,-1,1]
+    var directArray:Array = [down,up,left,right]
 
-    let rndMin = stepFrom - 1
-    let rndMax = uint(stepTo - rndMin)
-    let step = Int(arc4random_uniform(rndMax)) + rndMin //step from min to max
+    let rndMin = stepFrom
+    let rndMax = uint(stepTo - rndMin + 1)
+    let step = Int(arc4random_uniform(rndMax)) + rndMin
     var routeSave = Array(repeatElement(0, count: step+1))
 
     for x in 0...step
     {
         directArray = directArray.filter{ $0 != -repeatDirectRnd}
         if nowLoc / 6 == 4{
-            directArray = directArray.filter{ $0 != 6}
+            directArray = directArray.filter{ $0 != up}
         }
         if nowLoc % 6 == 0{
-            directArray = directArray.filter{ $0 != -1}
+            directArray = directArray.filter{ $0 != left}
         }
         if nowLoc % 6 == 5{
-            directArray = directArray.filter{ $0 != 1}
+            directArray = directArray.filter{ $0 != right}
         }
         if nowLoc / 6 == 0{
-            directArray = directArray.filter{ $0 != -6}
+            directArray = directArray.filter{ $0 != down}
         }
         directRnd = Int(arc4random_uniform(UInt32(directArray.count)))
         repeatDirectRnd = directArray[directRnd]
         routeSave[x] = directArray[directRnd]
         nowLoc += routeSave[x]
-        directArray = [-6,6,-1,1]
+        directArray = [down,up,left,right]
     }
 
     nowLoc = startLocation
@@ -64,9 +68,10 @@ func startRotation(originalArray: [Array<Int>],
         nextLoc = routeSave[x] + nowLoc
         nextH = nextLoc/6
         nextW = nextLoc%6
-        swap(&rotationA[nowH][nowW], &rotationA[nextH][nextW])
+        //resultArr.swapAt([nowH][nowW], [nextH][nextW])
+        swap(&resultArr[nowH][nowW], &resultArr[nextH][nextW])
         nowLoc = nextLoc
     }
 
-    return(rotationA,routeSave,nowLoc)
+    return(resultArr,routeSave,nowLoc)
 }

@@ -9,6 +9,7 @@
 import Foundation
 
 let cleanLen = 3
+var targetComboNumbers:Int = 7
 
 extension Array {
     subscript (safe index: Int) -> Element? {
