@@ -17,15 +17,12 @@ func startRotation(originalArray: [Array<Int>],
                    stepTo: Int
                    ) -> ([Array<Int>],Array<Any>,Int)
 {
-    let up = 6
-    let down = -6
-    let left = -1
-    let right = 1
+
     var resultArr = originalArray
     var nowLoc = startLocation
     var directRnd:Int = 3 //must to be 0~3
     var repeatDirectRnd:Int = 8 // copy from directRnd
-    var directArray:Array = [down,up,left,right]
+    var directArray:Array = [DOWN,UP,LEFT,RIGHT]
 
     let rndMin = stepFrom
     let rndMax = uint(stepTo - rndMin + 1)
@@ -36,22 +33,22 @@ func startRotation(originalArray: [Array<Int>],
     {
         directArray = directArray.filter{ $0 != -repeatDirectRnd}
         if nowLoc / 6 == 4{
-            directArray = directArray.filter{ $0 != up}
+            directArray = directArray.filter{ $0 != UP}
         }
         if nowLoc % 6 == 0{
-            directArray = directArray.filter{ $0 != left}
+            directArray = directArray.filter{ $0 != LEFT}
         }
         if nowLoc % 6 == 5{
-            directArray = directArray.filter{ $0 != right}
+            directArray = directArray.filter{ $0 != RIGHT}
         }
         if nowLoc / 6 == 0{
-            directArray = directArray.filter{ $0 != down}
+            directArray = directArray.filter{ $0 != DOWN}
         }
-        directRnd = Int(arc4random_uniform(UInt32(directArray.count)))
+        directRnd = directArray.count == 1 ? 0 : Int(arc4random_uniform(UInt32(directArray.count)))
         repeatDirectRnd = directArray[directRnd]
         routeSave[x] = directArray[directRnd]
         nowLoc += routeSave[x]
-        directArray = [down,up,left,right]
+        directArray = [DOWN,UP,LEFT,RIGHT]
     }
 
     nowLoc = startLocation
@@ -73,5 +70,7 @@ func startRotation(originalArray: [Array<Int>],
         nowLoc = nextLoc
     }
 
+
     return(resultArr,routeSave,nowLoc)
 }
+

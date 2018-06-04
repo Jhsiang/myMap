@@ -12,7 +12,6 @@ func genStartArr(noComboArr:Bool) -> [Array<Int>]
 {
     let wArr = Array(repeating: 0, count: 6)
     var resultArr = Array(repeating: wArr, count: 5)
-    NSLog("self.original Array1 = \n\(resultArr[0])\n\(resultArr[1])\n\(resultArr[2])\n\(resultArr[3])\n\(resultArr[4])")
     var hasCombo = false
     repeat
     {

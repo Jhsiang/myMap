@@ -8,12 +8,13 @@
 
 import Foundation
 
-func rotationFunc(inputArray:Array<Array<Int>>) -> (Array<Any>,Int,Int)
+func rotationFunc(inputArray:Array<Array<Int>>) -> (routeArr:Array<Any>,sLoc:Int,combo:Int)
 {
     // 初始設定
     var myInputArray = inputArray
     var totalCombo = comboCal(comboArray: myInputArray)
     var whileLoopCombo:Int = 0
+    var targetComboNumbers = TARGET_COMBO_NUMBERS
     var startLocation :Int = -1 // 起手位置
     var nextStartLocation:Int = startLocation // 下次起始位置
     var nowLocation:Int = 0 // 目前位置
@@ -29,12 +30,14 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (Array<Any>,Int,Int)
     {
         if oneCycle == 31 || oneCycle == 61 || oneCycle == 91
         {
+            NSLog("oneCycle = \(oneCycle) count = \(count)")
             targetComboNumbers -= 1
             NSLog("targetComboNumbers = \(targetComboNumbers)")
         }
         // 目標判定
-        if totalCombo >= targetComboNumbers
+        if totalCombo >= targetComboNumbers && (totalRouteSave.count <= MAX_TOTAL_STEP)
         {
+            NSLog("totalCombo = \(totalCombo) targetComboNumbers = \(targetComboNumbers)")
             // 中斷for 迴圈
             break
         }
@@ -53,7 +56,7 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (Array<Any>,Int,Int)
             totalRouteSave = []
             routeSave = []
             totalCombo = 0
-
+            var mustBreak = false
             // 開始處理
             while (totalCombo < targetComboNumbers) && (changeStartLocation == false)
             {
@@ -61,18 +64,21 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (Array<Any>,Int,Int)
                 whileLoopCombo = totalCombo
 
                 // 3x loop
-                while totalCombo < (whileLoopCombo+3)
+                while totalCombo < (whileLoopCombo+3) && totalCombo < targetComboNumbers
                 {
                     interruptCount += 1
-                    if interruptCount % 30 == 0
+                    let step = whileLoopCombo > 1 ? interruptCount / 6 + 7 : interruptCount / 40 + 7
+                    if interruptCount > 200 || (interruptCount > 30 && whileLoopCombo > 1) || (totalRouteSave.count + step > MAX_TOTAL_STEP)
                     {
+                        changeStartLocation = whileLoopCombo == 1 ? true : false
+                        mustBreak = whileLoopCombo == 1 ? true : false
                         totalCombo = comboCal(comboArray: myInputArray)
                         break
                     }
                     (calComboArray,routeSave,nowLocation) = startRotation(originalArray: myInputArray,
                                                                           startLocation: nextStartLocation,
-                                                                          stepFrom:10,
-                                                                          stepTo:11)
+                                                                          stepFrom:step,
+                                                                          stepTo:step)
                     totalCombo = comboCal(comboArray: calComboArray)
                 }
 
@@ -80,18 +86,19 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (Array<Any>,Int,Int)
                 interruptCount = 0
 
                 // 2x loop
-                while totalCombo < (whileLoopCombo+2)
+                while totalCombo < (whileLoopCombo+2) && totalCombo < targetComboNumbers && false
                 {
                     interruptCount += 1
-                    if interruptCount % 50 == 0
+                    let step = interruptCount / 30 + 7
+                    if interruptCount > 90 || (totalRouteSave.count + step > MAX_TOTAL_STEP)
                     {
                         totalCombo = comboCal(comboArray: myInputArray)
                         break
                     }
                     (calComboArray,routeSave,nowLocation) = startRotation(originalArray: myInputArray,
                                                                           startLocation: nextStartLocation,
-                                                                          stepFrom:8,
-                                                                          stepTo:9)
+                                                                          stepFrom:step,
+                                                                          stepTo:step)
                     totalCombo = comboCal(comboArray: calComboArray)
                 }
 
@@ -99,10 +106,11 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (Array<Any>,Int,Int)
                 interruptCount = 0
 
                 // 1x loop
-                while totalCombo < (whileLoopCombo+1)
+                while totalCombo < (whileLoopCombo+1) && totalCombo < targetComboNumbers
                 {
                     interruptCount += 1
-                    if interruptCount % 100 == 0
+                    let step = ((interruptCount/125) % 10 ) + 4
+                    if (interruptCount > 500) || mustBreak || ((totalRouteSave.count + step) > MAX_TOTAL_STEP)
                     {
                         // 重置起點
                         changeStartLocation = true
@@ -111,8 +119,8 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (Array<Any>,Int,Int)
                     }
                     (calComboArray,routeSave,nowLocation) = startRotation(originalArray: myInputArray,
                                                                           startLocation: nextStartLocation,
-                                                                          stepFrom:4,
-                                                                          stepTo:7)
+                                                                          stepFrom:step,
+                                                                          stepTo:step)
                     totalCombo = comboCal(comboArray: calComboArray)
                 }
 
@@ -138,30 +146,30 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (Array<Any>,Int,Int)
     {
         switch totalRouteSave[x] {
         case 1 as Int:
-            totalRouteSave[x] = "右"
+            totalRouteSave[x] = "up"
         case -1 as Int:
-            totalRouteSave[x] = "左"
+            totalRouteSave[x] = "left"
         case 6 as Int:
-            totalRouteSave[x] = "下"
+            totalRouteSave[x] = "down"
         case -6 as Int:
-            totalRouteSave[x] = "上"
+            totalRouteSave[x] = "up"
         default:
-            totalRouteSave[x] = "謎"
+            totalRouteSave[x] = "?"
         }
     }
 
-    NSLog("StartLocation = \(startLocation)")
-    NSLog("nextStartLocation = \(nextStartLocation)")
-    NSLog("total route(\(totalRouteSave.count)) = \(totalRouteSave)")
+    //NSLog("StartLocation = \(startLocation)")
+    //NSLog("nextStartLocation = \(nextStartLocation)")
+    //NSLog("total route(\(totalRouteSave.count)) = \(totalRouteSave)")
 
     // 迴圈執行數目
     NSLog("self.count = \(count)")
-
-    totalCombo = comboCal(comboArray: myInputArray)
-    NSLog("self.totalCombo = \(totalCombo)")
+    NSLog("self.totalCombo1 = \(totalCombo)")
+    //totalCombo = comboCal(comboArray: myInputArray)
+    //NSLog("self.totalCombo2 = \(totalCombo)")
 
     // 重組後陣列
-    NSLog("self.original Array2 = \n\(myInputArray[0])\n\(myInputArray[1])\n\(myInputArray[2])\n\(myInputArray[3])\n\(myInputArray[4])")
+    //NSLog("self.original Array2 = \n\(myInputArray[0])\n\(myInputArray[1])\n\(myInputArray[2])\n\(myInputArray[3])\n\(myInputArray[4])")
 
     return (totalRouteSave,startLocation,totalCombo)
 }

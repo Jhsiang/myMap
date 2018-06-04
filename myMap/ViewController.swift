@@ -14,11 +14,11 @@ import CoreLocation
 class ViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     let fullScreenSize = UIScreen.main.bounds.size
-    var myArray: Array =  [[2,2,5,4,3,3],
-                           [2,2,4,3,1,1],
-                           [2,3,3,3,1,0],
-                           [2,2,0,5,5,0],
-                           [0,2,2,2,0,2]]
+    var myArray: Array =  [[2, 3, 1, 5, 3, 4],
+                           [5, 2, 4, 3, 2, 2],
+                           [4, 5, 4, 3, 5, 1],
+                           [0, 3, 0, 4, 4, 3],
+                           [5, 4, 3, 1, 0, 3]]
 
     let stepLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     var imagePicker: UIImagePickerController!
@@ -37,15 +37,21 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         //let myImageWith = myScreenWidth/6
         //let myImageHeight = myScreenHeight/10
         NSLog("fullscreensize = \(fullScreenSize), myScreenWidth = \(myScreenWidth), myScreenHeight = \(myScreenHeight), myStartPosition = \(myStartPosition)")
-
+for _ in 0...9{
         // Generate start array
         myArray = genStartArr(noComboArr: true)
-        NSLog("self.original Array1 = \n\(myArray[0])\n\(myArray[1])\n\(myArray[2])\n\(myArray[3])\n\(myArray[4])")
+        NSLog("self.original Array  = \n[\(myArray[0]),\n\(myArray[1]),\n\(myArray[2]),\n\(myArray[3]),\n\(myArray[4])]")
         
         // 生成盤面計算
         var totalCombo:Int = comboCal(comboArray: self.myArray)
         NSLog("myArray combo = \(totalCombo)")
 
+        var routeArr = Array<Any>()
+        var sLoc = 0
+        totalCombo = 0
+        (routeArr,sLoc,totalCombo) = rotationFunc(inputArray: self.myArray)
+        NSLog("routeArr = \(routeArr.count)")
+}
         // 清除測試
         //clearUp(originalArray: myInputArray)
         
