@@ -11,33 +11,30 @@ import MapKit
 import CoreLocation
 
 
-class ViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
-    
+class ViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UICollectionViewDelegateFlowLayout{
+
+    @IBOutlet var myCollectionView: UICollectionView!
+
+    @IBOutlet var stepLabel: UILabel!
+
+
     let fullScreenSize = UIScreen.main.bounds.size
     var myArray: Array =  [[2, 3, 1, 5, 3, 4],
                            [5, 2, 4, 3, 2, 2],
                            [4, 5, 4, 3, 5, 1],
                            [0, 3, 0, 4, 4, 3],
                            [5, 4, 3, 1, 0, 3]]
+    var resultArr = Array<Array<Int>>()
 
-    let stepLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    var showResultArr = false
     var imagePicker: UIImagePickerController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        stepLabel.frame = CGRect(x: 0, y: 0, width: fullScreenSize.width, height: fullScreenSize.height)
-        //self.view.addSubview(stepLabel)
+
         stepLabel.numberOfLines = 0
-        stepLabel.font = stepLabel.font.withSize(25)
-        
-        let myScreenWidth:CGFloat = self.view.frame.width
-        let myScreenHeight:CGFloat = self.view.frame.height
-        let myStartPosition = CGPoint(x: 0, y: self.view.frame.height/2)
-        //let myImageWith = myScreenWidth/6
-        //let myImageHeight = myScreenHeight/10
-        NSLog("fullscreensize = \(fullScreenSize), myScreenWidth = \(myScreenWidth), myScreenHeight = \(myScreenHeight), myStartPosition = \(myStartPosition)")
-for _ in 0...9{
+        stepLabel.font = stepLabel.font.withSize(20)
+
         // Generate start array
         myArray = genStartArr(noComboArr: true)
         NSLog("self.original Array  = \n[\(myArray[0]),\n\(myArray[1]),\n\(myArray[2]),\n\(myArray[3]),\n\(myArray[4])]")
@@ -46,52 +43,16 @@ for _ in 0...9{
         var totalCombo:Int = comboCal(comboArray: self.myArray)
         NSLog("myArray combo = \(totalCombo)")
 
+    /*
         var routeArr = Array<Any>()
         var sLoc = 0
         totalCombo = 0
         (routeArr,sLoc,totalCombo) = rotationFunc(inputArray: self.myArray)
         NSLog("routeArr = \(routeArr.count)")
-}
+    */
         // 清除測試
         //clearUp(originalArray: myInputArray)
-        
-//MARK: Colletcion layout
-        // 設置底色
-        self.view.backgroundColor = UIColor.white
-        
-        // 建立 UICollectionViewFlowLayout
-        let layout = UICollectionViewFlowLayout()
-        
-        // 設置 section 的間距 四個數值分別代表 上、左、下、右 的間距
-        layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
-        
-        // 設置每一行的間距
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        
-        // 設置每個 cell 的尺寸
-        layout.itemSize = CGSize(width: CGFloat(fullScreenSize.width)/6, height: CGFloat(fullScreenSize.height)/10)
-        
-        // 設置 header 及 footer 的尺寸
-        layout.headerReferenceSize = CGSize(width: fullScreenSize.width, height: 40)
-        layout.footerReferenceSize = CGSize(width: fullScreenSize.width, height: 40)
-        
-        // 建立 UICollectionView
-        let myCollectionView = UICollectionView(frame: CGRect(x: 0, y: 20, width: fullScreenSize.width, height: fullScreenSize.height - 20), collectionViewLayout: layout)
-        
-        // 註冊 cell 以供後續重複使用
-        myCollectionView.register(MyCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        
-        // 註冊 section 的 header 跟 footer 以供後續重複使用
-        myCollectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
-        myCollectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "Footer")
-        
-        // 設置委任對象
-        myCollectionView.delegate = self
-        myCollectionView.dataSource = self
-        
-        // 加入畫面中
-        //self.view.addSubview(myCollectionView)
+
     }
     
 // MARK: - UICollectionViewDelegate
@@ -103,13 +64,13 @@ for _ in 0...9{
     // 必須實作的方法：每個 cell 要顯示的內容
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // 依據前面註冊設置的識別名稱 "Cell" 取得目前使用的 cell
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! MyCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! BallCollectionViewCell
         
         let xAxis : Int = indexPath.item % 6
         let yAxis : Int = indexPath.item / 6
         var myColor : UIColor = UIColor.clear
-        let colorNumber = myArray[yAxis][xAxis]
-        
+        let colorNumber = showResultArr ? resultArr[yAxis][xAxis] : myArray[yAxis][xAxis]
+
         switch colorNumber {
         case 0:
             myColor = UIColor(colorLiteralRed: 1, green: 0.8, blue: 0.8, alpha: 1)
@@ -127,11 +88,10 @@ for _ in 0...9{
             myColor = UIColor.clear
         }
         
-        cell.imageView.backgroundColor = myColor
-        // 設置 cell 內容 (即自定義元件裡 增加的圖片與文字元件)
-        cell.imageView.image = UIImage(named: "\(indexPath.item + 1).jpg")
-        cell.titleLabel.text = "\(colorNumber)"
-        
+        cell.backgroundColor = myColor
+        cell.numLabel.text = "\(colorNumber)"
+
+
         return cell
     }
     
@@ -145,37 +105,22 @@ for _ in 0...9{
         print("你選擇了第 \(indexPath.section + 1) 組的")
         print("第 \(indexPath.item + 1) 張圖片")
     }
-    
-    // 設置 reuse 的 section 的 header 或 footer
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        // 建立 UICollectionReusableView
-        var reusableView = UICollectionReusableView()
-        
-        // 顯示文字
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: fullScreenSize.width, height: 40))
-        label.textAlignment = .center
-        
-        // header
-        if kind == UICollectionElementKindSectionHeader {
-            // 依據前面註冊設置的識別名稱 "Header" 取得目前使用的 header
-            reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header", for: indexPath)
-            // 設置 header 的內容
-            reusableView.backgroundColor = UIColor.darkGray
-            label.text = "Header";
-            label.textColor = UIColor.white
-            
-        } else if kind == UICollectionElementKindSectionFooter {
-            // 依據前面註冊設置的識別名稱 "Footer" 取得目前使用的 footer
-            reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "Footer", for: indexPath)
-            // 設置 footer 的內容
-            reusableView.backgroundColor = UIColor.cyan
-            label.text = "Footer";
-            label.textColor = UIColor.black
-            
-        }
-        
-        reusableView.addSubview(label)
-        return reusableView
+
+//MARK: - UICollectionViewDelegateFlowLayout
+    // cell 尺寸
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cellSize:CGSize = CGSize(width: myCollectionView.frame.width/6, height: collectionView.frame.height/5)
+        return cellSize
+    }
+
+    // 左右間距
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat{
+        return 0
+    }
+
+    // 上下間距
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
     
 //MARK: - Button click
@@ -187,19 +132,46 @@ for _ in 0...9{
         present(imagePicker, animated: true, completion: nil)
     }
 
-//MARK: - UIImagePickerControllerDelegate
-    func imagePickerController(_ picker: UIImagePickerController,didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        //let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: fullScreenSize.width, height: fullScreenSize.height))
-        let image:UIImage! = info[UIImagePickerControllerOriginalImage] as! UIImage
-        let inputImageArray = imageToArray(imputImage: image)
+    @IBAction func rotationClick(_ sender: UIButton) {
+        sender.titleLabel?.alpha = 0.5
+        sender.isEnabled = false
         var displayStepArray = Array<Any>()
         var displayStratLocation:Int
         var displayTotalCombo:Int
-        (displayStepArray,displayStratLocation,displayTotalCombo) = rotationFunc(inputArray: inputImageArray)
-        
+        (displayStepArray,displayStratLocation,displayTotalCombo,resultArr) = rotationFunc(inputArray: self.myArray)
+        sender.isEnabled = true
+        sender.titleLabel?.alpha = 1
         stepLabel.text = "Total Combo = \(displayTotalCombo), Start Location = \(displayStratLocation) \n\n step(\(displayStepArray.count)) = \(displayStepArray)"
-        NSLog("step Array = \(displayStepArray)")
+    }
+
+    @IBAction func oriShowClick(_ sender: UIButton) {
+        showResultArr = false
+        self.myCollectionView.reloadData()
+    }
+
+    @IBAction func resultShowClick(_ sender: UIButton) {
+        if resultArr.count == 5{
+            showResultArr = true
+            self.myCollectionView.reloadData()
+        }else{
+            let alerView = UIAlertView(title: "錯誤", message: "資料為空", delegate: self, cancelButtonTitle: "確認")
+            alerView.show()
+        }
+    }
+
+    @IBAction func refreshClick(_ sender: UIBarButtonItem) {
+        myArray = genStartArr(noComboArr: true)
+        myCollectionView.reloadData()
+    }
+
+//MARK: - UIImagePickerControllerDelegate
+    func imagePickerController(_ picker: UIImagePickerController,didFinishPickingMediaWithInfo info: [String : Any]) {
+
+        let image:UIImage! = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let inputImageArray = imageToArray(imputImage: image)
+        self.myArray = inputImageArray
+        self.myCollectionView.reloadData()
+
         
         //退出
         picker.dismiss(animated: true, completion:nil)

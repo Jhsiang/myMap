@@ -8,9 +8,10 @@
 
 import Foundation
 
-func rotationFunc(inputArray:Array<Array<Int>>) -> (routeArr:Array<Any>,sLoc:Int,combo:Int)
+func rotationFunc(inputArray:Array<Array<Int>>) -> (routeArr:Array<Any>,sLoc:Int,combo:Int,resultArr:Array<Array<Int>>)
 {
     // 初始設定
+    var resArr = Array<Array<Int>>()
     var myInputArray = inputArray
     var totalCombo = comboCal(comboArray: myInputArray)
     var whileLoopCombo:Int = 0
@@ -145,13 +146,13 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (routeArr:Array<Any>,sLoc:Int
     for x in 0...totalRouteSave.count-1
     {
         switch totalRouteSave[x] {
-        case 1 as Int:
-            totalRouteSave[x] = "up"
-        case -1 as Int:
+        case RIGHT as Int:
+            totalRouteSave[x] = "right"
+        case LEFT as Int:
             totalRouteSave[x] = "left"
-        case 6 as Int:
+        case DOWN as Int:
             totalRouteSave[x] = "down"
-        case -6 as Int:
+        case UP as Int:
             totalRouteSave[x] = "up"
         default:
             totalRouteSave[x] = "?"
@@ -169,7 +170,8 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (routeArr:Array<Any>,sLoc:Int
     //NSLog("self.totalCombo2 = \(totalCombo)")
 
     // 重組後陣列
-    //NSLog("self.original Array2 = \n\(myInputArray[0])\n\(myInputArray[1])\n\(myInputArray[2])\n\(myInputArray[3])\n\(myInputArray[4])")
+    NSLog("self.original Array2 = \n\(myInputArray[0])\n\(myInputArray[1])\n\(myInputArray[2])\n\(myInputArray[3])\n\(myInputArray[4])")
+    resArr = myInputArray
 
-    return (totalRouteSave,startLocation,totalCombo)
+    return (totalRouteSave,startLocation,totalCombo,resArr)
 }

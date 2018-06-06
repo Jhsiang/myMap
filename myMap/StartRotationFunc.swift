@@ -33,7 +33,7 @@ func startRotation(originalArray: [Array<Int>],
     {
         directArray = directArray.filter{ $0 != -repeatDirectRnd}
         if nowLoc / 6 == 4{
-            directArray = directArray.filter{ $0 != UP}
+            directArray = directArray.filter{ $0 != DOWN}
         }
         if nowLoc % 6 == 0{
             directArray = directArray.filter{ $0 != LEFT}
@@ -42,7 +42,7 @@ func startRotation(originalArray: [Array<Int>],
             directArray = directArray.filter{ $0 != RIGHT}
         }
         if nowLoc / 6 == 0{
-            directArray = directArray.filter{ $0 != DOWN}
+            directArray = directArray.filter{ $0 != UP}
         }
         directRnd = directArray.count == 1 ? 0 : Int(arc4random_uniform(UInt32(directArray.count)))
         repeatDirectRnd = directArray[directRnd]

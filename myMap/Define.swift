@@ -8,10 +8,10 @@
 
 import Foundation
 
-let UP = 6
+let UP = -6
 let LEFT = -1
 let RIGHT = 1
-let DOWN = -6
+let DOWN = 6
 
 let cleanLen = 3
 let TARGET_COMBO_NUMBERS:Int = 6
