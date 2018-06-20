@@ -135,13 +135,15 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     @IBAction func rotationClick(_ sender: UIButton) {
         sender.titleLabel?.alpha = 0.5
         sender.isEnabled = false
-        var displayStepArray = Array<Any>()
-        var displayStratLocation:Int
-        var displayTotalCombo:Int
-        (displayStepArray,displayStratLocation,displayTotalCombo,resultArr) = rotationFunc(inputArray: self.myArray)
-        sender.isEnabled = true
-        sender.titleLabel?.alpha = 1
-        stepLabel.text = "Total Combo = \(displayTotalCombo), Start Location = \(displayStratLocation) \n\n step(\(displayStepArray.count)) = \(displayStepArray)"
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.01) {
+            var displayStepArray = Array<Any>()
+            var displayStratLocation:Int
+            var displayTotalCombo:Int
+            (displayStepArray,displayStratLocation,displayTotalCombo,self.resultArr) = rotationFunc(inputArray: self.myArray)
+            sender.isEnabled = true
+            sender.titleLabel?.alpha = 1
+            self.stepLabel.text = "Total Combo = \(displayTotalCombo), Start Location = \(displayStratLocation) \n\n step(\(displayStepArray.count)) = \(displayStepArray)"
+        }
     }
 
     @IBAction func oriShowClick(_ sender: UIButton) {
