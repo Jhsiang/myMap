@@ -30,7 +30,7 @@ func comboCal (comboArray: [Array<Int>]) -> Int{
         totalCombo += combo
         oriArr = clearUp(originalArray: oriArr)
         newArr = oriArr
-    } while combo >= 1
+    } while combo >= 1 //second cal after clear up
     return totalCombo
 }
 
@@ -50,7 +50,7 @@ func fillComplete(sH:Int,sW:Int,oriA:[Array<Int>],newA:[Array<Int>],len:Int,dir:
         }
         if fullCondition{
             calCombo += 1
-            resultA = spread(arr: resultA, startH: sH, startW: sW, ballNum:   ballNum)
+            resultA = spread(arr: resultA, startH: sH, startW: sW, ballNum: ballNum)
         }
 
     case "down":
@@ -79,32 +79,38 @@ func spread(arr:[Array<Int>],startH:Int,startW:Int,ballNum:Int) -> [Array<Int>]{
     var resultArr = arr
     let h = arr[startH]
 
+    let startWn1 = startW - 1
+    let startWp1 = startW + 1
+
+    let startHn1 = startH - 1
+    let startHp1 = startH + 1
+
     resultArr[startH][startW] = ballNum + CLEAN_NUMBER_OF_SPREAD
 
-    if let left = h[safe:startW-1]{
+    if let left = h[safe:startWn1]{
         if left == ballNum{
-            resultArr[startH][startW-1] = ballNum + CLEAN_NUMBER_OF_SPREAD
-            resultArr = spread(arr: resultArr, startH: startH, startW: startW-1, ballNum: ballNum)
+            resultArr[startH][startWn1] = ballNum + CLEAN_NUMBER_OF_SPREAD
+            resultArr = spread(arr: resultArr, startH: startH, startW: startWn1, ballNum: ballNum)
         }
     }
-    if let right = h[safe:startW+1]{
+    if let right = h[safe:startWp1]{
         if right == ballNum{
-            resultArr[startH][startW+1] = ballNum + CLEAN_NUMBER_OF_SPREAD
-            resultArr = spread(arr: resultArr, startH: startH, startW: startW+1, ballNum: ballNum)
+            resultArr[startH][startWp1] = ballNum + CLEAN_NUMBER_OF_SPREAD
+            resultArr = spread(arr: resultArr, startH: startH, startW: startWp1, ballNum: ballNum)
         }
     }
-    if let hUp = arr[safe:startH-1]{
+    if let hUp = arr[safe:startHn1]{
         let up = hUp[startW]
         if up == ballNum{
-            resultArr[startH-1][startW] = ballNum + CLEAN_NUMBER_OF_SPREAD
-            resultArr = spread(arr: resultArr, startH: startH-1, startW: startW, ballNum: ballNum)
+            resultArr[startHn1][startW] = ballNum + CLEAN_NUMBER_OF_SPREAD
+            resultArr = spread(arr: resultArr, startH: startHn1, startW: startW, ballNum: ballNum)
         }
     }
-    if let hdown = arr[safe:startH+1]{
+    if let hdown = arr[safe:startHp1]{
         let down = hdown[startW]
         if down == ballNum{
-            resultArr[startH+1][startW] = ballNum + CLEAN_NUMBER_OF_SPREAD
-            resultArr = spread(arr: resultArr, startH: startH+1, startW: startW, ballNum: ballNum)
+            resultArr[startHp1][startW] = ballNum + CLEAN_NUMBER_OF_SPREAD
+            resultArr = spread(arr: resultArr, startH: startHp1, startW: startW, ballNum: ballNum)
         }
     }
 

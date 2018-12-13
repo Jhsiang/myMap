@@ -15,23 +15,21 @@ func startRotation(originalArray: [Array<Int>],
                    startLocation: Int,
                    stepFrom: Int,
                    stepTo: Int
-                   ) -> ([Array<Int>],Array<Any>,Int)
+    ) -> (resultArr:[Array<Int>],routeSave:Array<Any>,nowLoc:Int)
 {
 
     var resultArr = originalArray
     var nowLoc = startLocation
-    var directRnd:Int = 3 //must to be 0~3
-    var repeatDirectRnd:Int = 8 // copy from directRnd
+    var directRnd:Int = DOWN
+    var reverseDirectRnd:Int? = nil // copy from directRnd
     var directArray:Array = [DOWN,UP,LEFT,RIGHT]
 
-    let rndMin = stepFrom
-    let rndMax = uint(stepTo - rndMin + 1)
-    let step = Int(arc4random_uniform(rndMax)) + rndMin
-    var routeSave = Array(repeatElement(0, count: step+1))
+    let step = Int.random(in: stepFrom...stepTo)
+    var routeSave = Array<Int>()
 
-    for x in 0...step
+    for _ in 1...step
     {
-        directArray = directArray.filter{ $0 != -repeatDirectRnd}
+        directArray = directArray.filter{ $0 != reverseDirectRnd}
         if nowLoc / 6 == 4{
             directArray = directArray.filter{ $0 != DOWN}
         }
@@ -44,10 +42,10 @@ func startRotation(originalArray: [Array<Int>],
         if nowLoc / 6 == 0{
             directArray = directArray.filter{ $0 != UP}
         }
-        directRnd = directArray.count == 1 ? 0 : Int(arc4random_uniform(UInt32(directArray.count)))
-        repeatDirectRnd = directArray[directRnd]
-        routeSave[x] = directArray[directRnd]
-        nowLoc += routeSave[x]
+        directRnd = directArray.randomElement()!
+        reverseDirectRnd = -directRnd
+        routeSave.append(directRnd)
+        nowLoc += directRnd
         directArray = [DOWN,UP,LEFT,RIGHT]
     }
 
@@ -58,14 +56,15 @@ func startRotation(originalArray: [Array<Int>],
     var nextW:Int
     var nextLoc:Int
 
-    for x in 0...step
+    for dir in routeSave
     {
         nowH = nowLoc / 6
         nowW = nowLoc % 6
-        nextLoc = routeSave[x] + nowLoc
+
+        nextLoc = dir + nowLoc
         nextH = nextLoc/6
         nextW = nextLoc%6
-        //resultArr.swapAt([nowH][nowW], [nextH][nextW])
+
         swap(&resultArr[nowH][nowW], &resultArr[nextH][nextW])
         nowLoc = nextLoc
     }

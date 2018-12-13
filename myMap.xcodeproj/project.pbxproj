@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F06E40E20C7BE9600A37301 /* BallCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F06E40D20C7BE9600A37301 /* BallCollectionViewCell.swift */; };
+		0F16F44D21C0FC7600E24320 /* RotArr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F16F44C21C0FC7600E24320 /* RotArr.swift */; };
 		0F41F0801F6B793C002699C5 /* ClearUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F41F07F1F6B793C002699C5 /* ClearUp.swift */; };
 		0F48570C1F553ABD00E852C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F48570B1F553ABD00E852C2 /* AppDelegate.swift */; };
 		0F48570E1F553ABD00E852C2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F48570D1F553ABD00E852C2 /* ViewController.swift */; };
@@ -49,6 +50,7 @@
 
 /* Begin PBXFileReference section */
 		0F06E40D20C7BE9600A37301 /* BallCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallCollectionViewCell.swift; sourceTree = "<group>"; };
+		0F16F44C21C0FC7600E24320 /* RotArr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotArr.swift; sourceTree = "<group>"; };
 		0F41F07F1F6B793C002699C5 /* ClearUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClearUp.swift; path = ../ClearUp.swift; sourceTree = "<group>"; };
 		0F4857081F553ABD00E852C2 /* myMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F48570B1F553ABD00E852C2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				0F48570F1F553ABD00E852C2 /* Main.storyboard */,
 				0F4857141F553ABD00E852C2 /* LaunchScreen.storyboard */,
 				0F4857171F553ABD00E852C2 /* Info.plist */,
+				0F16F44C21C0FC7600E24320 /* RotArr.swift */,
 			);
 			path = myMap;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F48570E1F553ABD00E852C2 /* ViewController.swift in Sources */,
+				0F16F44D21C0FC7600E24320 /* RotArr.swift in Sources */,
 				0F4D3B821FAAF68600E0E67F /* ImageTransferArray.swift in Sources */,
 				0FB6DD211F6A317A0035707B /* ComboCalFunc.swift in Sources */,
 				0F4E4AF7206CC79600DB9D32 /* Define.swift in Sources */,

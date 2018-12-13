@@ -24,6 +24,16 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
                            [4, 5, 4, 3, 5, 1],
                            [0, 3, 0, 4, 4, 3],
                            [5, 4, 3, 1, 0, 3]]
+    var myArray2: Array =  [[2, 5, 5, 4, 3, 3],
+                            [5, 3, 4, 3, 1, 1],
+                            [2, 3, 0, 2, 1, 0],
+                            [4, 0, 2, 5, 5, 0],
+                            [0, 1, 1, 2, 0, 2]]
+    var myArray3: Array =  [[7, 7, 7, 7, 7, 7],
+                            [7, 0, 0, 0, 7, 7],
+                            [7, 7, 7, 0, 0, 7],
+                            [7, 7, 7, 7, 0, 7],
+                            [7, 7, 7, 7, 0, 7]]
     var resultArr = Array<Array<Int>>()
 
     var showResultArr = false
@@ -36,7 +46,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         stepLabel.font = stepLabel.font.withSize(20)
 
         // Generate start array
-        myArray = genStartArr(noComboArr: true)
+        //myArray = genStartArr(noComboArr: true)
         NSLog("self.original Array  = \n[\(myArray[0]),\n\(myArray[1]),\n\(myArray[2]),\n\(myArray[3]),\n\(myArray[4])]")
         
         // 生成盤面計算
@@ -53,6 +63,39 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         // 清除測試
         //clearUp(originalArray: myInputArray)
 
+        let autoClick = {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                NSLog("trigger start")
+                let myBtn = UIButton()
+                self.rotationClick(myBtn)
+                NSLog("trigger end")
+            }
+        }
+        autoClick()
+
+        let test1 = {
+            var combo = 0
+            var count = 0
+            var loc:Int? = nil
+            var mySave = Array<Any>()
+            var resu = Array<Array<Int>>()
+            repeat{
+                count += 1
+                let aa = startRotation(originalArray: self.myArray, startLocation: 0, stepFrom: 5, stepTo: 5)
+                loc = aa.nowLoc
+                combo = comboCal(comboArray: aa.resultArr)
+                mySave = aa.routeSave
+                resu = aa.resultArr
+            } while combo < 1
+            print("count = ",count)
+            print("combo = ",combo)
+            print("now loc = ",loc)
+            print("mySave = ",mySave)
+            for x in resu{
+                print(x)
+            }
+        }
+        //test1()
     }
     
 // MARK: - UICollectionViewDelegate
@@ -73,11 +116,11 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
 
         switch colorNumber {
         case 0:
-            myColor = UIColor(colorLiteralRed: 1, green: 0.8, blue: 0.8, alpha: 1)
+            myColor = UIColor(red: 1, green: 0.8, blue: 0.8, alpha: 1)
         case 1:
             myColor = UIColor.yellow
         case 2:
-            myColor = UIColor(colorLiteralRed: 0.4, green: 0.0, blue: 0.3, alpha: 1)//UIColor.purple
+            myColor = UIColor(red: 0.4, green: 0.0, blue: 0.3, alpha: 1)//UIColor.purple
         case 3:
             myColor = UIColor.blue
         case 4:
@@ -133,13 +176,15 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     }
 
     @IBAction func rotationClick(_ sender: UIButton) {
+        print("rotation btn click")
         sender.titleLabel?.alpha = 0.5
         sender.isEnabled = false
         DispatchQueue.main.asyncAfter(deadline: .now()+0.01) {
             var displayStepArray = Array<Any>()
             var displayStratLocation:Int
             var displayTotalCombo:Int
-            (displayStepArray,displayStratLocation,displayTotalCombo,self.resultArr) = rotationFunc(inputArray: self.myArray)
+            //(displayStepArray,displayStratLocation,displayTotalCombo,self.resultArr) = rotationFunc(inputArray: self.myArray)
+            (displayStepArray,displayStratLocation,displayTotalCombo,self.resultArr) = rotAlgo(inputArray: self.myArray)
             sender.isEnabled = true
             sender.titleLabel?.alpha = 1
             self.stepLabel.text = "Total Combo = \(displayTotalCombo), Start Location = \(displayStratLocation) \n\n step(\(displayStepArray.count)) = \(displayStepArray)"

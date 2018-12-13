@@ -68,7 +68,7 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (routeArr:Array<Any>,sLoc:Int
                 while totalCombo < (whileLoopCombo+3) && totalCombo < targetComboNumbers
                 {
                     interruptCount += 1
-                    let step = whileLoopCombo > 1 ? interruptCount / 6 + 7 : interruptCount / 40 + 7
+                    let step = whileLoopCombo > 1 ? interruptCount / 6 + 8 : interruptCount / 40 + 8
                     if interruptCount > 200 || (interruptCount > 30 && whileLoopCombo > 1) || (totalRouteSave.count + step > MAX_TOTAL_STEP)
                     {
                         changeStartLocation = whileLoopCombo == 1 ? true : false
@@ -90,7 +90,7 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (routeArr:Array<Any>,sLoc:Int
                 while totalCombo < (whileLoopCombo+2) && totalCombo < targetComboNumbers && false
                 {
                     interruptCount += 1
-                    let step = interruptCount / 30 + 7
+                    let step = interruptCount / 30 + 8
                     if interruptCount > 90 || (totalRouteSave.count + step > MAX_TOTAL_STEP)
                     {
                         totalCombo = comboCal(comboArray: myInputArray)
@@ -110,7 +110,7 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (routeArr:Array<Any>,sLoc:Int
                 while totalCombo < (whileLoopCombo+1) && totalCombo < targetComboNumbers
                 {
                     interruptCount += 1
-                    let step = ((interruptCount/125) % 10 ) + 4
+                    let step = ((interruptCount/125) % 10 ) + 5 //WTF? interrupt = 1250times is around?
                     if (interruptCount > 500) || mustBreak || ((totalRouteSave.count + step) > MAX_TOTAL_STEP)
                     {
                         // 重置起點
@@ -166,6 +166,7 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (routeArr:Array<Any>,sLoc:Int
     // 迴圈執行數目
     NSLog("self.count = \(count)")
     NSLog("self.totalCombo1 = \(totalCombo)")
+    NSLog("step count = \(totalRouteSave.count)")
     //totalCombo = comboCal(comboArray: myInputArray)
     //NSLog("self.totalCombo2 = \(totalCombo)")
 
@@ -174,4 +175,97 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (routeArr:Array<Any>,sLoc:Int
     resArr = myInputArray
 
     return (totalRouteSave,startLocation,totalCombo,resArr)
+}
+
+func rotAlgo(inputArray:Array<Array<Int>>) -> (routeArr:Array<Any>,sLoc:Int,combo:Int,resultArr:Array<Array<Int>>){
+
+    // result
+    var routeArr = Array<Any>()
+    var sLoc = 0
+    var combo = 0
+    var resultArr = Array<Array<Int>>()
+
+    // data
+    var targetLoc = 0
+    var routeSave = Array<Any>()
+    var totalRouteSave = Array<Int>()
+    resultArr = inputArray
+
+    // data2
+    var saveArr = [Array<Array<Int>>]()
+    var sLocArr = Array<Int>()
+    var nextLocArr = Array<Int>()
+    var totalRouteSaveArr = Array<Array<Int>>()
+    var comboArr = Array<Int>()
+    var myLoc = 0
+
+    // cal
+    let sRandArr = [0,5,24,29]
+    var count = 0
+
+NSLog("Start time1")
+    myBigLoop:while combo < TARGET_COMBO_NUMBERS {
+        sLoc = sRandArr.randomElement()!
+        let aa = startRotation(originalArray: resultArr, startLocation: sLoc, stepFrom: 4, stepTo: 10)
+        targetLoc = aa.nowLoc
+        resultArr = aa.resultArr
+        routeSave = aa.routeSave
+        combo = comboCal(comboArray: aa.resultArr)
+
+
+        if combo > 0{
+            saveArr.append(aa.resultArr)
+            sLocArr.append(sLoc)
+            nextLocArr.append(aa.nowLoc)
+            totalRouteSaveArr.append(aa.routeSave as! Array<Int>)
+            comboArr.append(combo)
+        }
+
+
+        if saveArr.count > 0 {
+            for x in 0...saveArr.count - 1{
+                let bb = startRotation(originalArray: saveArr[x], startLocation: nextLocArr[x], stepFrom: 4, stepTo: 10)
+                let combo = comboCal(comboArray: bb.resultArr)
+count += 1
+                if combo > comboArr[x]{
+                    saveArr[x] = bb.resultArr
+                    nextLocArr[x] = bb.nowLoc
+                    let intArr = bb.routeSave as! Array<Int>
+                    for y in intArr{
+                        totalRouteSaveArr[x].append(y)
+                    }
+                    comboArr[x] = combo
+                    if combo >= TARGET_COMBO_NUMBERS{
+                        myLoc = x
+                        break myBigLoop
+                    }
+                }
+
+
+            }
+        }
+    }
+
+NSLog("end time2")
+
+    routeArr = totalRouteSaveArr[myLoc]
+    sLoc = sLocArr[myLoc]
+    resultArr = saveArr[myLoc]
+    combo = comboArr[myLoc]
+
+    // 迴圈執行數目
+    NSLog("self.totalCombo1 = \(combo)")
+    NSLog("sloc = \(sLoc)")
+    NSLog("step count = \(routeArr.count)")
+    NSLog("step = \(routeArr)")
+    NSLog("count = \(count)")
+
+    // 重組後陣列
+    NSLog("self.original Array2 = \n\(resultArr[0])\n\(resultArr[1])\n\(resultArr[2])\n\(resultArr[3])\n\(resultArr[4])")
+
+    return (routeArr,sLoc,combo,resultArr)
+}
+
+private func aa(){
+
 }

@@ -15,7 +15,7 @@ let DOWN = 6
 
 let cleanLen = 3
 let TARGET_COMBO_NUMBERS:Int = 6
-let MAX_TOTAL_STEP:Int = 300
+let MAX_TOTAL_STEP:Int = 30
 
 extension Array {
     subscript (safe index: Int) -> Element? {
