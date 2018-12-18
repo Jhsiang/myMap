@@ -15,7 +15,7 @@ func startRotation(originalArray: [Array<Int>],
                    startLocation: Int,
                    stepFrom: Int,
                    stepTo: Int
-    ) -> (resultArr:[Array<Int>],routeSave:Array<Any>,nowLoc:Int)
+    ) -> (resultArr:[Array<Int>],routeSave:Array<Int>,nowLoc:Int)
 {
 
     var resultArr = originalArray
@@ -27,7 +27,7 @@ func startRotation(originalArray: [Array<Int>],
     let step = Int.random(in: stepFrom...stepTo)
     var routeSave = Array<Int>()
 
-    for _ in 1...step
+    for _ in 0..<step
     {
         directArray = directArray.filter{ $0 != reverseDirectRnd}
         if nowLoc / 6 == 4{

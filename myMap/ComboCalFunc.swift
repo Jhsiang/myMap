@@ -20,9 +20,13 @@ func comboCal (comboArray: [Array<Int>]) -> Int{
         combo = 0
         for h in 0...4{
             for w in 0...5{
-                if oriArr[h][w] <= 5 && oriArr[h][w] >= 0{
-                    (newArr,combo) = w <= (6-cleanLen) ? fillComplete(sH: h, sW: w, oriA: oriArr, newA: newArr, len: cleanLen, dir: "right", combo: combo) : (newArr, combo)
-                    (newArr,combo) = h <= (5-cleanLen) ? fillComplete(sH: h, sW: w, oriA: oriArr, newA: newArr, len: cleanLen, dir: "down", combo: combo) : (newArr, combo)
+                if 0...5 ~= oriArr[h][w] && newArr[h][w] != DISABLE_BALL_NUMBER {
+                    if w <= (6 - cleanLen) && newArr[h][w+1] != DISABLE_BALL_NUMBER && newArr[h][w+2] != DISABLE_BALL_NUMBER{
+                        (newArr,combo) = fillComplete(sH: h, sW: w, oriA: oriArr, newA: newArr, len: cleanLen, dir: "right", combo: combo)
+                    }
+                    if h <= (5-cleanLen) && newArr[h+1][w] != DISABLE_BALL_NUMBER && newArr[h+2][w] != DISABLE_BALL_NUMBER{
+                        (newArr,combo) = fillComplete(sH: h, sW: w, oriA: oriArr, newA: newArr, len: cleanLen, dir: "down", combo: combo)
+                    }
                 }
             }
         }
@@ -39,31 +43,27 @@ func fillComplete(sH:Int,sW:Int,oriA:[Array<Int>],newA:[Array<Int>],len:Int,dir:
     let ballNum = oriA[sH][sW]
     var resultA = newA
     var calCombo = combo
-    var fullCondition = true
+
     switch dir{
     case "right":
-        for x in 0...len-1{
-            if oriA[sH][sW] == oriA[sH][sW+x] && newA[sH][sW+x] < CLEAN_NUMBER_OF_SPREAD{
-            }else{
-                fullCondition = false
+        for x in 0..<len{
+            if oriA[sH][sW] != oriA[sH][sW+x]{
+                return (resultA,calCombo)
             }
         }
-        if fullCondition{
             calCombo += 1
             resultA = spread(arr: resultA, startH: sH, startW: sW, ballNum: ballNum)
-        }
 
     case "down":
-        for x in 0...len-1{
-            if oriA[sH][sW] == oriA[sH+x][sW] && newA[sH+x][sW] < CLEAN_NUMBER_OF_SPREAD{
-            }else{
-                fullCondition = false
+        for x in 0..<len{
+            if oriA[sH][sW] != oriA[sH+x][sW]{
+                return (resultA,calCombo)
             }
         }
-        if fullCondition{
-            calCombo += 1
-            resultA = spread(arr: resultA, startH: sH, startW: sW, ballNum: ballNum)
-        }
+
+        calCombo += 1
+        resultA = spread(arr: resultA, startH: sH, startW: sW, ballNum: ballNum)
+
     case "left":
         break
     case "up":
@@ -85,31 +85,31 @@ func spread(arr:[Array<Int>],startH:Int,startW:Int,ballNum:Int) -> [Array<Int>]{
     let startHn1 = startH - 1
     let startHp1 = startH + 1
 
-    resultArr[startH][startW] = ballNum + CLEAN_NUMBER_OF_SPREAD
+    resultArr[startH][startW] = DISABLE_BALL_NUMBER
 
     if let left = h[safe:startWn1]{
         if left == ballNum{
-            resultArr[startH][startWn1] = ballNum + CLEAN_NUMBER_OF_SPREAD
+            resultArr[startH][startWn1] = DISABLE_BALL_NUMBER
             resultArr = spread(arr: resultArr, startH: startH, startW: startWn1, ballNum: ballNum)
         }
     }
     if let right = h[safe:startWp1]{
         if right == ballNum{
-            resultArr[startH][startWp1] = ballNum + CLEAN_NUMBER_OF_SPREAD
+            resultArr[startH][startWp1] = DISABLE_BALL_NUMBER
             resultArr = spread(arr: resultArr, startH: startH, startW: startWp1, ballNum: ballNum)
         }
     }
     if let hUp = arr[safe:startHn1]{
         let up = hUp[startW]
         if up == ballNum{
-            resultArr[startHn1][startW] = ballNum + CLEAN_NUMBER_OF_SPREAD
+            resultArr[startHn1][startW] = DISABLE_BALL_NUMBER
             resultArr = spread(arr: resultArr, startH: startHn1, startW: startW, ballNum: ballNum)
         }
     }
     if let hdown = arr[safe:startHp1]{
         let down = hdown[startW]
         if down == ballNum{
-            resultArr[startHp1][startW] = ballNum + CLEAN_NUMBER_OF_SPREAD
+            resultArr[startHp1][startW] = DISABLE_BALL_NUMBER
             resultArr = spread(arr: resultArr, startH: startHp1, startW: startW, ballNum: ballNum)
         }
     }

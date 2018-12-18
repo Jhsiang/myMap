@@ -12,40 +12,40 @@ import Foundation
 func clearUp(originalArray: [Array<Int>]) -> [Array<Int>]
 {
     var clearUpArray = originalArray
+    var fullCondition = true
+    for H in 0...4{
+        for W in 0...5{
 
-    for count in 0...29
-    {
-        let H :Int = count/6 // H = 0 to 4
-        let W :Int = count%6 // W = 0 to 5
+            fullCondition = true
 
-        var fullCondition = true
-        if W <= (6-cleanLen)
-        {
-            for x in 0...cleanLen-1{
-                if originalArray[H][W] == originalArray[H][W+x]{
-                }else{
-                    fullCondition = false
+            if W <= (6-cleanLen)
+            {
+                for x in 0..<cleanLen{
+                    if originalArray[H][W] != originalArray[H][W+x]{
+                        fullCondition = false
+                        break
+                    }
                 }
-            }
-            for x in 0...cleanLen-1{
                 if fullCondition{
-                    clearUpArray[H][W+x] =  CLEAR_UP_BALL_NUMBER
+                    for x in 0..<cleanLen{
+                        clearUpArray[H][W+x] =  CLEAR_UP_BALL_NUMBER
+                    }
                 }
             }
-        }
 
-        fullCondition = true
-        if H <= (5-cleanLen)
-        {
-            for x in 0...cleanLen-1{
-                if originalArray[H][W] == originalArray[H+x][W]{
-                }else{
-                    fullCondition = false
+            fullCondition = true
+            if H <= (5-cleanLen)
+            {
+                for x in 0..<cleanLen{
+                    if originalArray[H][W] != originalArray[H+x][W]{
+                        fullCondition = false
+                        break
+                    }
                 }
-            }
-            for x in 0...cleanLen-1{
                 if fullCondition{
-                    clearUpArray[H+x][W] =  CLEAR_UP_BALL_NUMBER
+                    for x in 0..<cleanLen{
+                        clearUpArray[H+x][W] =  CLEAR_UP_BALL_NUMBER
+                    }
                 }
             }
         }
@@ -66,7 +66,7 @@ func clearUp(originalArray: [Array<Int>]) -> [Array<Int>]
             }
         }
     }
-    
+
     //NSLog("clearUpArray = \n\(clearUpArray[0])\n\(clearUpArray[1])\n\(clearUpArray[2])\n\(clearUpArray[3])\n\(clearUpArray[4])")
 
     return clearUpArray

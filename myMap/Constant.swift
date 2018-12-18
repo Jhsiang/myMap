@@ -9,4 +9,4 @@
 import Foundation
 
 let CLEAR_UP_BALL_NUMBER:Int = 7
-let CLEAN_NUMBER_OF_SPREAD:Int = 60
+let DISABLE_BALL_NUMBER:Int = 60
