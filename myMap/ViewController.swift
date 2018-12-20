@@ -32,7 +32,8 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     var resultArr = Array<Array<Int>>()
 
     var moveArr = Array<Array<Int>>()
-    var startMovePoint:CGPoint? = nil
+    var startIndexPath = IndexPath()
+    var diyStep = 0
 
     var showResultArr = false
     var imagePicker: UIImagePickerController!
@@ -47,6 +48,8 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         myArray = genStartArr(noComboArr: true)
         NSLog("self.original Array  = \n[\(myArray[0]),\n\(myArray[1]),\n\(myArray[2]),\n\(myArray[3]),\n\(myArray[4])]")
 
+        myCollectionView.addGestureRecognizer(setLongPress())
+
         let autoClick = {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 NSLog("trigger start")
@@ -56,6 +59,9 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
             }
         }
         //autoClick()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
 
     }
     
@@ -65,9 +71,8 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! BallCollectionViewCell
 
-        cell.addGestureRecognizer(setPan())
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! BallCollectionViewCell
 
         let xAxis : Int = indexPath.item % 6
         let yAxis : Int = indexPath.item / 6
@@ -90,32 +95,9 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         default:
             myColor = UIColor.clear
         }
-        
+        //cell.clipsToBounds = false
         cell.backgroundColor = myColor
         cell.numLabel.text = "\(colorNumber)"
-
-        if let sp = startMovePoint{
-            let myIndex = Int(sp.x * 6 + sp.y)
-            if indexPath.row == myIndex{
-                let cellIV = UIImageView(frame: cell.bounds)
-                cellIV.backgroundColor = UIColor.black
-                cellIV.alpha = 0.3
-                cellIV.tag = 99
-                cell.addSubview(cellIV)
-            }else{
-                for sub in cell.subviews{
-                    if sub.tag == 99{
-                        sub.removeFromSuperview()
-                    }
-                }
-            }
-        }else{
-            for sub in cell.subviews{
-                if sub.tag == 99{
-                    sub.removeFromSuperview()
-                }
-            }
-        }
 
         return cell
     }
@@ -128,6 +110,16 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
+    }
+
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        var com = comboCal(comboArray: myArray)
+        stepLabel.text = "\(com) c"
+        print("\(com) c")
     }
 
 //MARK: - UICollectionViewDelegateFlowLayout
@@ -182,8 +174,10 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
             showResultArr = true
             self.myCollectionView.reloadData()
         }else{
-            let alerView = UIAlertView(title: "錯誤", message: "資料為空", delegate: self, cancelButtonTitle: "確認")
-            alerView.show()
+            let alert = UIAlertController(title: "錯誤", message: "資料為空", preferredStyle: UIAlertControllerStyle.alert)
+            let okAction = UIAlertAction(title: "確認", style: .cancel, handler: nil)
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
         }
     }
 
@@ -195,7 +189,8 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
 //MARK: - UIImagePickerControllerDelegate
     func imagePickerController(_ picker: UIImagePickerController,didFinishPickingMediaWithInfo info: [String : Any]) {
 
-        let image:UIImage! = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let image:UIImage! = info[UIImagePickerControllerOriginalImage] as? UIImage
+        //let image2 = info[UIImagePickerControllerOriginalImage] as! UIImage
         let inputImageArray = imageToArray(imputImage: image)
         self.myArray = inputImageArray
         self.myCollectionView.reloadData()
@@ -205,151 +200,89 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         picker.dismiss(animated: true, completion:nil)
     }
 
-    // 設定拖曳手勢
-    func setPan() ->UIPanGestureRecognizer{
-        let myPan = UIPanGestureRecognizer(target: self, action: #selector(whenPan))
-        myPan.maximumNumberOfTouches = 1
-        myPan.minimumNumberOfTouches = 1
-        return myPan
-    }
-
-    // 設定點擊一次手勢
-    func setOTap() -> UITapGestureRecognizer{
-        let myTap = UITapGestureRecognizer(target: self, action: #selector(whenOTap(sender:)))
-        myTap.numberOfTapsRequired = 1
-        return myTap
-    }
-
-    // 設定點擊四次手勢
-    func setDTap() -> UITapGestureRecognizer{
-        let myTap = UITapGestureRecognizer(target: self, action: #selector(whenDTap(sender:)))
-        myTap.numberOfTapsRequired = 4
-        return myTap
-    }
-
+//MARK: - Gesture Recognizer
     // 設定長按手勢
     func setLongPress() -> UILongPressGestureRecognizer{
         let myLongPress = UILongPressGestureRecognizer(target: self, action: #selector(whenLongPress(sender:)))
-        myLongPress.minimumPressDuration = 0.8
+        myLongPress.minimumPressDuration = 0.03
         return myLongPress
     }
 
     // 長按事件
     @objc func whenLongPress(sender:UILongPressGestureRecognizer){
-
-        // 長按顯示尺寸圖
-        if sender.state == UIGestureRecognizer.State.began{
-            if let size = sender.view?.bounds.size{
-
-                // 尺寸視窗
-                let sizeView = UIView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: size))
-                sizeView.backgroundColor = .black
-
-                // 高度標籤
-                let hLabel = UILabel(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height/2))
-                hLabel.textColor = .white
-                hLabel.text = "↕︎\(size.height)↕︎"
-                hLabel.minimumScaleFactor = 0.2
-                hLabel.font = hLabel.font.withSize(40)
-                hLabel.adjustsFontSizeToFitWidth = true
-
-                // 長度標籤
-                let wLabel = UILabel(frame: CGRect(x: 0, y: size.height/2, width: size.width, height: size.height/2))
-                wLabel.textColor = .white
-                wLabel.text = "↔︎\(size.width)↔︎"
-                wLabel.minimumScaleFactor = 0.2
-                wLabel.font = wLabel.font.withSize(40)
-                wLabel.adjustsFontSizeToFitWidth = true
-
-                sizeView.addSubview(hLabel)
-                sizeView.addSubview(wLabel)
-
-                sender.view?.addSubview(sizeView)
+        switch sender.state {
+        case .began:
+            if let selectIndexPath = myCollectionView.indexPathForItem(at: sender.location(in: sender.view!)){
+                diyStep = 0
+                startIndexPath = selectIndexPath
+                myCollectionView.beginInteractiveMovementForItem(at: startIndexPath)
             }
-        }
+            break
+        case .changed:
+            if let moveIndexPath = myCollectionView.indexPathForItem(at: sender.location(in: sender.view!)){
+                if moveIndexPath == startIndexPath{
+                    myCollectionView.updateInteractiveMovementTargetPosition(sender.location(in: sender.view!))
+                }else{
+                    diyStep += 1
+                    // Array Swap
+                    let moveW = moveIndexPath.row % 6
+                    let moveH = moveIndexPath.row / 6
+                    let starW = startIndexPath.row % 6
+                    let starH = startIndexPath.row / 6
+                    let swapValue = myArray[moveH][moveW]
+                    myArray[moveH][moveW] = myArray[starH][starW]
+                    myArray[starH][starW] = swapValue
 
-        // 放開刪除尺寸圖
-        if sender.state == UIGestureRecognizer.State.ended{
-            for sizeLabelView in sender.view!.subviews{
-                sizeLabelView.removeFromSuperview()
-            }
-        }
-    }
+                    // Update start location
+                    startIndexPath = moveIndexPath
+                    myCollectionView.reloadData()
 
-    // 拖曳事件
-    @objc func whenPan(sender:UIPanGestureRecognizer){
-        // 根據旋轉角度 計算拖曳位置
-        /*
-        let nowCenter = sender.view!.center
-        let tr = sender.translation(in: sender.view)
-        let rot = sender.view!.transform
-        sender.view!.center = CGPoint(x: nowCenter.x + tr.x * rot.a + tr.y * rot.c,
-                                      y: nowCenter.y + tr.y * rot.d + tr.x * rot.b)
-        sender.setTranslation(CGPoint.zero, in: self.view)
-*/
+                    DispatchQueue.main.asyncAfter(deadline: .now()+0.001) {
+                        self.myCollectionView.endInteractiveMovement()
+                        self.myCollectionView.beginInteractiveMovementForItem(at: self.startIndexPath)
+                        self.myCollectionView.updateInteractiveMovementTargetPosition(sender.location(in: sender.view!))
+                    }
 
-        if sender.state == .began{
-            let startCellLoc = sender.location(in: myCollectionView)
-
-            let w = myCollectionView.bounds.width / 6
-            let h = myCollectionView.bounds.height / 5
-            let sW = Int(startCellLoc.x / w)
-            let sH = Int(startCellLoc.y / h)
-
-            let myPoint = CGPoint(x: sH, y: sW)
-            startMovePoint = myPoint
-            self.myCollectionView.reloadData()
-        }
-
-        if sender.state == UIGestureRecognizer.State.ended{
-            startMovePoint = nil
-            self.myCollectionView.reloadData()
-        }
-
-        if let sp = startMovePoint{
-            let cellPos = sender.location(in: myCollectionView)
-            let w = myCollectionView.bounds.width / 6
-            let h = myCollectionView.bounds.height / 5
-            let cellH = Int(cellPos.y / h)
-            let cellW = Int(cellPos.x / w)
-            let sH = Int(sp.x)
-            let sW = Int(sp.y)
-
-
-            if (sW != cellW || sH != cellH) && 0...4 ~= cellH && 0...5 ~= cellW{
-                startMovePoint = CGPoint(x: cellH, y: cellW)
-                let swapValue = myArray[sH][sW]
-                myArray[sH][sW] = myArray[cellH][cellW]
-                myArray[cellH][cellW] = swapValue
-
-                DispatchQueue.main.async {
-                    self.myCollectionView.reloadData()
                 }
             }
+            break
+        case .ended:
+            myCollectionView.endInteractiveMovement()
+            var com = comboCal(comboArray: myArray)
+            stepLabel.text = "\(com) c , step = \(diyStep)"
+            print("\(com) c , step = \(diyStep)")
 
+
+            /*
+            if #available(iOS 10.0, *) {
+                let timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { (myT) in
+                    if com > 0{
+
+                        self.myArray = clearUp(originalArray: self.myArray)
+                        self.myCollectionView.reloadData()
+                        com = comboCal(comboArray: self.myArray)
+                    }else{
+
+                        myT.invalidate()
+                    }
+                }
+                timer.fire()
+            } else {
+
+            }
+             */
+            break
+        default:
+
+            myCollectionView.cancelInteractiveMovement()
+            break
         }
-
     }
 
-    // 點擊P事件
-    @objc func whenOTap(sender:UITapGestureRecognizer){
-        // 長寬互換
-        //let size = sender.view!.frame.size
-        //sender.view!.frame.size = CGSize(width: size.height, height: size.width)
-        //sender.view!.transform = CGAffineTransform.identity.rotated(by: CGFloat.pi/2)
 
-        // 旋轉90度
-        //sender.view!.transform = sender.view!.transform.rotated(by: CGFloat.pi/2)
 
-        let aa = sender.location(in: myCollectionView)
+    func updateClearUpArr(){
 
-        print("nowCenter = ",aa)
-
-    }
-
-    // 連按四下事件
-    @objc func whenDTap(sender:UITapGestureRecognizer){
-        sender.view!.removeFromSuperview()
     }
 
     

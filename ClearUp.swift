@@ -61,7 +61,10 @@ func clearUp(originalArray: [Array<Int>]) -> [Array<Int>]
                 let H1 = H + 1
                 if clearUpArray[H1][W] == CLEAR_UP_BALL_NUMBER
                 {
-                    swap(&clearUpArray[H][W], &clearUpArray[H1][W])
+                    let swapValue = clearUpArray[H][W]
+                    clearUpArray[H][W] = clearUpArray[H1][W]
+                    clearUpArray[H1][W] = swapValue
+                    //swap(&clearUpArray[H][W], &clearUpArray[H1][W])
                 }
             }
         }
@@ -71,3 +74,5 @@ func clearUp(originalArray: [Array<Int>]) -> [Array<Int>]
 
     return clearUpArray
 }
+
+
