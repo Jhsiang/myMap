@@ -45,7 +45,11 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         stepLabel.font = stepLabel.font.withSize(20)
 
         // Generate start array
-        myArray = genStartArr(noComboArr: true)
+        if let arr = Board.share.getOriArr(){
+            myArray = arr
+        }else{
+            myArray = genStartArr(noComboArr: true)
+        }
         NSLog("self.original Array  = \n[\(myArray[0]),\n\(myArray[1]),\n\(myArray[2]),\n\(myArray[3]),\n\(myArray[4])]")
 
         myCollectionView.addGestureRecognizer(setLongPress())
@@ -81,19 +85,19 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
 
         switch colorNumber {
         case 0:
-            myColor = UIColor(red: 1, green: 0.8, blue: 0.8, alpha: 1)
+            myColor = HeartColor
         case 1:
-            myColor = UIColor.yellow
+            myColor = LightColor
         case 2:
-            myColor = UIColor(red: 0.4, green: 0.0, blue: 0.3, alpha: 1)//UIColor.purple
+            myColor = DarkColor
         case 3:
-            myColor = UIColor.blue
+            myColor = WaterColor
         case 4:
-            myColor = UIColor.red
+            myColor = FireColor
         case 5:
-            myColor = UIColor.green
+            myColor = WoodColor
         default:
-            myColor = UIColor.clear
+            myColor = UnknowColor
         }
         //cell.clipsToBounds = false
         cell.backgroundColor = myColor
@@ -234,6 +238,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
                     myArray[starH][starW] = swapValue
 
                     // Update start location
+                    //myCollectionView.reloadItems(at: [startIndexPath,moveIndexPath])
                     startIndexPath = moveIndexPath
                     myCollectionView.reloadData()
 

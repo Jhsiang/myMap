@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F06E40E20C7BE9600A37301 /* BallCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F06E40D20C7BE9600A37301 /* BallCollectionViewCell.swift */; };
+		0F0CFB5921D2094800347091 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFB5821D2094800347091 /* Board.swift */; };
 		0F16F44D21C0FC7600E24320 /* RotArr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F16F44C21C0FC7600E24320 /* RotArr.swift */; };
 		0F41F0801F6B793C002699C5 /* ClearUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F41F07F1F6B793C002699C5 /* ClearUp.swift */; };
 		0F48570C1F553ABD00E852C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F48570B1F553ABD00E852C2 /* AppDelegate.swift */; };
@@ -27,6 +28,7 @@
 		0F4D3B841FAAF72600E0E67F /* pic.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F4D3B831FAAF72600E0E67F /* pic.png */; };
 		0F4E4AF5206C81C500DB9D32 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4E4AF4206C81C500DB9D32 /* Constant.swift */; };
 		0F4E4AF7206CC79600DB9D32 /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4E4AF6206CC79600DB9D32 /* Define.swift */; };
+		0F76AAB321CE34A40040F7AC /* SetArrayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F76AAB221CE34A40040F7AC /* SetArrayViewController.swift */; };
 		0FB6DD211F6A317A0035707B /* ComboCalFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6DD201F6A317A0035707B /* ComboCalFunc.swift */; };
 		0FB6DD231F6A54F80035707B /* StartRotationFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6DD221F6A54F80035707B /* StartRotationFunc.swift */; };
 /* End PBXBuildFile section */
@@ -50,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		0F06E40D20C7BE9600A37301 /* BallCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallCollectionViewCell.swift; sourceTree = "<group>"; };
+		0F0CFB5821D2094800347091 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		0F16F44C21C0FC7600E24320 /* RotArr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotArr.swift; sourceTree = "<group>"; };
 		0F41F07F1F6B793C002699C5 /* ClearUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClearUp.swift; path = ../ClearUp.swift; sourceTree = "<group>"; };
 		0F4857081F553ABD00E852C2 /* myMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,6 +78,7 @@
 		0F4D3B831FAAF72600E0E67F /* pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic.png; sourceTree = "<group>"; };
 		0F4E4AF4206C81C500DB9D32 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		0F4E4AF6206CC79600DB9D32 /* Define.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
+		0F76AAB221CE34A40040F7AC /* SetArrayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetArrayViewController.swift; sourceTree = "<group>"; };
 		0FB6DD201F6A317A0035707B /* ComboCalFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComboCalFunc.swift; sourceTree = "<group>"; };
 		0FB6DD221F6A54F80035707B /* StartRotationFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartRotationFunc.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -149,6 +153,7 @@
 				0F4857141F553ABD00E852C2 /* LaunchScreen.storyboard */,
 				0F4857171F553ABD00E852C2 /* Info.plist */,
 				0F16F44C21C0FC7600E24320 /* RotArr.swift */,
+				0F76AAB521CE34B20040F7AC /* setArray */,
 			);
 			path = myMap;
 			sourceTree = "<group>";
@@ -186,6 +191,15 @@
 				0F4D3B831FAAF72600E0E67F /* pic.png */,
 			);
 			name = image;
+			sourceTree = "<group>";
+		};
+		0F76AAB521CE34B20040F7AC /* setArray */ = {
+			isa = PBXGroup;
+			children = (
+				0F76AAB221CE34A40040F7AC /* SetArrayViewController.swift */,
+				0F0CFB5821D2094800347091 /* Board.swift */,
+			);
+			name = setArray;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -332,11 +346,13 @@
 				0F06E40E20C7BE9600A37301 /* BallCollectionViewCell.swift in Sources */,
 				0F41F0801F6B793C002699C5 /* ClearUp.swift in Sources */,
 				0F4BDA1E20B5249B00DB8147 /* RotationAlgorithm.swift in Sources */,
+				0F76AAB321CE34A40040F7AC /* SetArrayViewController.swift in Sources */,
 				0FB6DD231F6A54F80035707B /* StartRotationFunc.swift in Sources */,
 				0F4D3B7D1FAAD14D00E0E67F /* GetColor.swift in Sources */,
 				0F4E4AF5206C81C500DB9D32 /* Constant.swift in Sources */,
 				0F48570C1F553ABD00E852C2 /* AppDelegate.swift in Sources */,
 				0F4BDA1C20B5142F00DB8147 /* GenerateStartArray.swift in Sources */,
+				0F0CFB5921D2094800347091 /* Board.swift in Sources */,
 				0F48EC211F5CF2C100AC0883 /* MyCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
