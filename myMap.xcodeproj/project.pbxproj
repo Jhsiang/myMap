@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		0F06E40E20C7BE9600A37301 /* BallCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F06E40D20C7BE9600A37301 /* BallCollectionViewCell.swift */; };
 		0F0CFB5921D2094800347091 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFB5821D2094800347091 /* Board.swift */; };
+		0F0CFB6921D2197100347091 /* dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F0CFB6621D2197100347091 /* dark.png */; };
+		0F0CFB6A21D2197100347091 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F0CFB6721D2197100347091 /* heart.png */; };
+		0F0CFB6B21D2197100347091 /* light.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F0CFB6821D2197100347091 /* light.png */; };
+		0F0CFB6F21D21BF500347091 /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F0CFB6C21D21BF500347091 /* fire.png */; };
+		0F0CFB7021D21BF500347091 /* water.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F0CFB6D21D21BF500347091 /* water.png */; };
+		0F0CFB7121D21BF500347091 /* wood.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F0CFB6E21D21BF500347091 /* wood.png */; };
+		0F0CFB7321D2213300347091 /* Ball2CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFB7221D2213300347091 /* Ball2CollectionViewCell.swift */; };
 		0F16F44D21C0FC7600E24320 /* RotArr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F16F44C21C0FC7600E24320 /* RotArr.swift */; };
 		0F41F0801F6B793C002699C5 /* ClearUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F41F07F1F6B793C002699C5 /* ClearUp.swift */; };
 		0F48570C1F553ABD00E852C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F48570B1F553ABD00E852C2 /* AppDelegate.swift */; };
@@ -53,6 +60,13 @@
 /* Begin PBXFileReference section */
 		0F06E40D20C7BE9600A37301 /* BallCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallCollectionViewCell.swift; sourceTree = "<group>"; };
 		0F0CFB5821D2094800347091 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		0F0CFB6621D2197100347091 /* dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dark.png; sourceTree = "<group>"; };
+		0F0CFB6721D2197100347091 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
+		0F0CFB6821D2197100347091 /* light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light.png; sourceTree = "<group>"; };
+		0F0CFB6C21D21BF500347091 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
+		0F0CFB6D21D21BF500347091 /* water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = water.png; sourceTree = "<group>"; };
+		0F0CFB6E21D21BF500347091 /* wood.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood.png; sourceTree = "<group>"; };
+		0F0CFB7221D2213300347091 /* Ball2CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball2CollectionViewCell.swift; sourceTree = "<group>"; };
 		0F16F44C21C0FC7600E24320 /* RotArr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotArr.swift; sourceTree = "<group>"; };
 		0F41F07F1F6B793C002699C5 /* ClearUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClearUp.swift; path = ../ClearUp.swift; sourceTree = "<group>"; };
 		0F4857081F553ABD00E852C2 /* myMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +160,7 @@
 				0FB6DD221F6A54F80035707B /* StartRotationFunc.swift */,
 				0F4BDA1D20B5249B00DB8147 /* RotationAlgorithm.swift */,
 				0F06E40D20C7BE9600A37301 /* BallCollectionViewCell.swift */,
+				0F0CFB7221D2213300347091 /* Ball2CollectionViewCell.swift */,
 				0F41F07F1F6B793C002699C5 /* ClearUp.swift */,
 				0F4D3B7C1FAAD14D00E0E67F /* GetColor.swift */,
 				0F4857121F553ABD00E852C2 /* Assets.xcassets */,
@@ -189,6 +204,12 @@
 			isa = PBXGroup;
 			children = (
 				0F4D3B831FAAF72600E0E67F /* pic.png */,
+				0F0CFB6721D2197100347091 /* heart.png */,
+				0F0CFB6821D2197100347091 /* light.png */,
+				0F0CFB6621D2197100347091 /* dark.png */,
+				0F0CFB6D21D21BF500347091 /* water.png */,
+				0F0CFB6C21D21BF500347091 /* fire.png */,
+				0F0CFB6E21D21BF500347091 /* wood.png */,
 			);
 			name = image;
 			sourceTree = "<group>";
@@ -310,9 +331,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F0CFB6B21D2197100347091 /* light.png in Resources */,
+				0F0CFB6F21D21BF500347091 /* fire.png in Resources */,
+				0F0CFB7021D21BF500347091 /* water.png in Resources */,
 				0F4857161F553ABD00E852C2 /* LaunchScreen.storyboard in Resources */,
+				0F0CFB6921D2197100347091 /* dark.png in Resources */,
 				0F4857131F553ABD00E852C2 /* Assets.xcassets in Resources */,
+				0F0CFB7121D21BF500347091 /* wood.png in Resources */,
 				0F4D3B841FAAF72600E0E67F /* pic.png in Resources */,
+				0F0CFB6A21D2197100347091 /* heart.png in Resources */,
 				0F4857111F553ABD00E852C2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,6 +378,7 @@
 				0F4D3B7D1FAAD14D00E0E67F /* GetColor.swift in Sources */,
 				0F4E4AF5206C81C500DB9D32 /* Constant.swift in Sources */,
 				0F48570C1F553ABD00E852C2 /* AppDelegate.swift in Sources */,
+				0F0CFB7321D2213300347091 /* Ball2CollectionViewCell.swift in Sources */,
 				0F4BDA1C20B5142F00DB8147 /* GenerateStartArray.swift in Sources */,
 				0F0CFB5921D2094800347091 /* Board.swift in Sources */,
 				0F48EC211F5CF2C100AC0883 /* MyCollectionViewCell.swift in Sources */,

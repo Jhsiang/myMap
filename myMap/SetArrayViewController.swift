@@ -20,6 +20,7 @@ class SetArrayViewController: UIViewController,UICollectionViewDelegate,UICollec
                    [3, 5, 4, 0, 4, 5]]
     var bottomArray = [Heart,Light,Dark,Water,Fire,Wood]
     var bottomColorArr = [HeartColor,LightColor,DarkColor,WaterColor,FireColor,WoodColor]
+    var bottomImgStrArr = [ImageStrHeart,ImageStrLight,ImageStrDark,ImageStrWater,ImageStrFire,ImageStrWood]
 
     var selectColor:UIColor? = nil
     let headH:CGFloat = 40
@@ -77,7 +78,12 @@ class SetArrayViewController: UIViewController,UICollectionViewDelegate,UICollec
             let senderLoc = sender.location(in: sender.view)
             if let startIndex = myCollectionView.indexPathForItem(at: senderLoc){
                 if startIndex.section == 1{
-                    colorIV.backgroundColor = bottomColorArr[startIndex.row]
+                    if let image = UIImage(named: bottomImgStrArr[startIndex.row]) {
+                        colorIV.backgroundColor = .clear
+                        colorIV.image = image
+                    }else{
+                        colorIV.backgroundColor = bottomColorArr[startIndex.row]
+                    }
                     selectColor = bottomColorArr[startIndex.row]
                 }else if startIndex.section == 0,let setColor = selectColor{
                     let h = startIndex.row/6
@@ -166,7 +172,7 @@ class SetArrayViewController: UIViewController,UICollectionViewDelegate,UICollec
             label.textColor = UIColor.black
 
         }
-        print(reusableView.subviews.count)
+
         if reusableView.subviews.count == 0{
             reusableView.addSubview(label)
         }
@@ -180,59 +186,30 @@ class SetArrayViewController: UIViewController,UICollectionViewDelegate,UICollec
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "set_array_cell", for: indexPath) as! BallCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell_set_array2", for: indexPath) as! Ball2CollectionViewCell
 
         if indexPath.section == 0{
             let h = indexPath.row / 6
             let w = indexPath.row % 6
 
             let colorNum = myArray[h][w]
-            var myColor = UIColor.clear
-
-            switch colorNum {
-            case Heart:
-                myColor = HeartColor
-            case Light:
-                myColor = LightColor
-            case Dark:
-                myColor = DarkColor
-            case Water:
-                myColor = WaterColor
-            case Fire:
-                myColor = FireColor
-            case Wood:
-                myColor = WoodColor
-            default:
-                break
+            if let image = UIImage(named: bottomImgStrArr[colorNum]){
+                cell.IV.image = image
+                cell.IV.contentMode = .scaleAspectFit
             }
 
-            cell.numLabel.text = "\(colorNum)"
-            cell.backgroundColor = myColor
+            cell.backgroundColor = .clear
             return cell
+
         }else{
             let colorNum = bottomArray[indexPath.row]
 
-            var myColor = UIColor.clear
-
-            switch colorNum {
-            case Heart:
-                myColor = HeartColor
-            case Light:
-                myColor = LightColor
-            case Dark:
-                myColor = DarkColor
-            case Water:
-                myColor = WaterColor
-            case Fire:
-                myColor = FireColor
-            case Wood:
-                myColor = WoodColor
-            default:
-                break
+            if let image = UIImage(named: bottomImgStrArr[colorNum]){
+                cell.IV.image = image
+                cell.IV.contentMode = .scaleAspectFit
             }
 
-            cell.numLabel.text = "\(colorNum)"
-            cell.backgroundColor = myColor
+            cell.backgroundColor = .clear
             return cell
         }
     }

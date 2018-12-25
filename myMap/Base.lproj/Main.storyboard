@@ -54,6 +54,28 @@
                                             <outlet property="numLabel" destination="3hk-IO-Qcf" id="83q-yc-Htj"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell_ball2" id="OYS-dx-aYa" customClass="Ball2CollectionViewCell" customModule="myMap" customModuleProvider="target">
+                                        <rect key="frame" x="96.5" y="0.0" width="85" height="74"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="85" height="74"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Txh-iG-Jel">
+                                                    <rect key="frame" x="0.0" y="0.0" width="85" height="74"/>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="Txh-iG-Jel" firstAttribute="top" secondItem="OYS-dx-aYa" secondAttribute="top" id="22j-Lo-CDY"/>
+                                            <constraint firstAttribute="bottom" secondItem="Txh-iG-Jel" secondAttribute="bottom" id="9O8-yD-muV"/>
+                                            <constraint firstAttribute="trailing" secondItem="Txh-iG-Jel" secondAttribute="trailing" id="JY4-jZ-d1f"/>
+                                            <constraint firstItem="Txh-iG-Jel" firstAttribute="leading" secondItem="OYS-dx-aYa" secondAttribute="leading" id="SS4-z5-iEm"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="IV" destination="Txh-iG-Jel" id="oeX-VW-hI6"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="Lja-Bx-nef"/>
@@ -139,7 +161,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2262" y="114"/>
+            <point key="canvasLocation" x="2261.5999999999999" y="113.79310344827587"/>
         </scene>
         <!--設定-->
         <scene sceneID="Ja5-fC-xTd">
@@ -157,14 +179,16 @@
                                 <rect key="frame" x="0.0" y="539" width="375" height="128"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s4S-nP-t8V">
-                                        <rect key="frame" x="94" y="32" width="187.5" height="64"/>
+                                        <rect key="frame" x="155.5" y="32" width="64" height="64"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="s4S-nP-t8V" secondAttribute="height" multiplier="1:1" id="2tj-Sn-2lv"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="s4S-nP-t8V" firstAttribute="height" secondItem="QLU-nj-kEh" secondAttribute="height" multiplier="1:2" id="A3f-rR-NjJ"/>
                                     <constraint firstItem="s4S-nP-t8V" firstAttribute="centerX" secondItem="QLU-nj-kEh" secondAttribute="centerX" id="X7y-Jp-3DM"/>
-                                    <constraint firstItem="s4S-nP-t8V" firstAttribute="width" secondItem="QLU-nj-kEh" secondAttribute="width" multiplier="1:2" id="hdv-Qj-eYF"/>
                                     <constraint firstItem="s4S-nP-t8V" firstAttribute="centerY" secondItem="QLU-nj-kEh" secondAttribute="centerY" id="zoF-4X-lVt"/>
                                 </constraints>
                             </view>
@@ -204,6 +228,28 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="numLabel" destination="kmp-9l-EYp" id="cVT-ql-cfh"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell_set_array2" id="PVK-jJ-meB" customClass="Ball2CollectionViewCell" customModule="myMap" customModuleProvider="target">
+                                        <rect key="frame" x="65" y="50" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Cgt-Pl-Pa2">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Cgt-Pl-Pa2" secondAttribute="trailing" id="GYZ-ea-1Ul"/>
+                                            <constraint firstItem="Cgt-Pl-Pa2" firstAttribute="top" secondItem="PVK-jJ-meB" secondAttribute="top" id="Gg2-pB-5HI"/>
+                                            <constraint firstItem="Cgt-Pl-Pa2" firstAttribute="leading" secondItem="PVK-jJ-meB" secondAttribute="leading" id="NNW-ba-5z1"/>
+                                            <constraint firstAttribute="bottom" secondItem="Cgt-Pl-Pa2" secondAttribute="bottom" id="Zlz-Ye-eVX"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="IV" destination="Cgt-Pl-Pa2" id="e50-OE-RZn"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

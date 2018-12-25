@@ -26,3 +26,10 @@ let Dark = 2
 let Water = 3
 let Fire = 4
 let Wood = 5
+
+let ImageStrHeart = "heart.png"
+let ImageStrLight = "light.png"
+let ImageStrDark = "dark.png"
+let ImageStrWater = "water.png"
+let ImageStrFire = "fire.png"
+let ImageStrWood = "wood.png"

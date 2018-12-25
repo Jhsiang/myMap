@@ -76,32 +76,35 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! BallCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell_ball2", for: indexPath) as! Ball2CollectionViewCell
 
         let xAxis : Int = indexPath.item % 6
         let yAxis : Int = indexPath.item / 6
-        var myColor : UIColor = UIColor.clear
+        var myImageViewName:String = ""
         let colorNumber = showResultArr ? resultArr[yAxis][xAxis] : myArray[yAxis][xAxis]
 
         switch colorNumber {
         case 0:
-            myColor = HeartColor
+            myImageViewName = "heart.png"
         case 1:
-            myColor = LightColor
+            myImageViewName = "light.png"
         case 2:
-            myColor = DarkColor
+            myImageViewName = "dark.png"
         case 3:
-            myColor = WaterColor
+            myImageViewName = "water.png"
         case 4:
-            myColor = FireColor
+            myImageViewName = "fire.png"
         case 5:
-            myColor = WoodColor
+            myImageViewName = "wood.png"
         default:
-            myColor = UnknowColor
+            myImageViewName = ""
         }
-        //cell.clipsToBounds = false
-        cell.backgroundColor = myColor
-        cell.numLabel.text = "\(colorNumber)"
+        cell.backgroundColor = .clear
+        if let image = UIImage(named: myImageViewName){
+            cell.IV.image = image
+            cell.IV.contentMode = .scaleAspectFit
+        }
+
 
         return cell
     }
