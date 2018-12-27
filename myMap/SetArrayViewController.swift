@@ -40,21 +40,6 @@ class SetArrayViewController: UIViewController,UICollectionViewDelegate,UICollec
         myCollectionView.addGestureRecognizer(setLP())
     }
 
-    func loadArray(arr:Array<Array<Int>>) -> Array<Array<Int>>?{
-        guard arr.count == 5 else {
-            return nil
-        }
-
-        for subArr in arr{
-            guard subArr.count == 6 else{
-                return nil
-            }
-        }
-        let result = arr + [bottomArray]
-
-        return result
-    }
-
     //MARK: - Gesture
     func setLP() -> UILongPressGestureRecognizer{
         let gesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressGesture(sender:)))
@@ -150,32 +135,30 @@ class SetArrayViewController: UIViewController,UICollectionViewDelegate,UICollec
         // header
         if kind == UICollectionElementKindSectionHeader
         {
-            // 依據前面註冊設置的識別名稱 "Header" 取得目前使用的 header
             reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header", for: indexPath)
-            // 設置 header 的內容
             reusableView.backgroundColor = UIColor.darkGray
+
             if indexPath.section == 0{
                 label.text = "Original"
             }else if indexPath.section == 1{
                 label.text = "Selector"
             }
             label.textColor = UIColor.white
-
         }
         else if kind == UICollectionElementKindSectionFooter
         {
-            // 依據前面註冊設置的識別名稱 "Footer" 取得目前使用的 footer
             reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "Footer", for: indexPath)
-            // 設置 footer 的內容
             reusableView.backgroundColor = UIColor.white
-            //label.text = "Footer";
             label.textColor = UIColor.black
-
         }
 
-        if reusableView.subviews.count == 0{
-            reusableView.addSubview(label)
+        for sub in reusableView.subviews{
+            if sub.tag == 888{
+                sub.removeFromSuperview()
+            }
         }
+        reusableView.addSubview(label)
+
         return reusableView
     }
 

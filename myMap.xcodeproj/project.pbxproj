@@ -16,6 +16,9 @@
 		0F0CFB7021D21BF500347091 /* water.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F0CFB6D21D21BF500347091 /* water.png */; };
 		0F0CFB7121D21BF500347091 /* wood.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F0CFB6E21D21BF500347091 /* wood.png */; };
 		0F0CFB7321D2213300347091 /* Ball2CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFB7221D2213300347091 /* Ball2CollectionViewCell.swift */; };
+		0F16655D21D30DB20005F28C /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F16655C21D30DB10005F28C /* bg.png */; };
+		0F16655F21D30FAD0005F28C /* bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F16655E21D30FAD0005F28C /* bg2.png */; };
+		0F16656121D32B960005F28C /* SetArrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F16656021D32B960005F28C /* SetArrViewController.swift */; };
 		0F16F44D21C0FC7600E24320 /* RotArr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F16F44C21C0FC7600E24320 /* RotArr.swift */; };
 		0F41F0801F6B793C002699C5 /* ClearUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F41F07F1F6B793C002699C5 /* ClearUp.swift */; };
 		0F48570C1F553ABD00E852C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F48570B1F553ABD00E852C2 /* AppDelegate.swift */; };
@@ -67,6 +70,9 @@
 		0F0CFB6D21D21BF500347091 /* water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = water.png; sourceTree = "<group>"; };
 		0F0CFB6E21D21BF500347091 /* wood.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood.png; sourceTree = "<group>"; };
 		0F0CFB7221D2213300347091 /* Ball2CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball2CollectionViewCell.swift; sourceTree = "<group>"; };
+		0F16655C21D30DB10005F28C /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		0F16655E21D30FAD0005F28C /* bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg2.png; sourceTree = "<group>"; };
+		0F16656021D32B960005F28C /* SetArrViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetArrViewController.swift; sourceTree = "<group>"; };
 		0F16F44C21C0FC7600E24320 /* RotArr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotArr.swift; sourceTree = "<group>"; };
 		0F41F07F1F6B793C002699C5 /* ClearUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClearUp.swift; path = ../ClearUp.swift; sourceTree = "<group>"; };
 		0F4857081F553ABD00E852C2 /* myMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,6 +209,8 @@
 		0F4D3B7E1FAAF53700E0E67F /* image */ = {
 			isa = PBXGroup;
 			children = (
+				0F16655C21D30DB10005F28C /* bg.png */,
+				0F16655E21D30FAD0005F28C /* bg2.png */,
 				0F4D3B831FAAF72600E0E67F /* pic.png */,
 				0F0CFB6721D2197100347091 /* heart.png */,
 				0F0CFB6821D2197100347091 /* light.png */,
@@ -219,6 +227,7 @@
 			children = (
 				0F76AAB221CE34A40040F7AC /* SetArrayViewController.swift */,
 				0F0CFB5821D2094800347091 /* Board.swift */,
+				0F16656021D32B960005F28C /* SetArrViewController.swift */,
 			);
 			name = setArray;
 			sourceTree = "<group>";
@@ -340,6 +349,8 @@
 				0F0CFB7121D21BF500347091 /* wood.png in Resources */,
 				0F4D3B841FAAF72600E0E67F /* pic.png in Resources */,
 				0F0CFB6A21D2197100347091 /* heart.png in Resources */,
+				0F16655F21D30FAD0005F28C /* bg2.png in Resources */,
+				0F16655D21D30DB20005F28C /* bg.png in Resources */,
 				0F4857111F553ABD00E852C2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,6 +377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F48570E1F553ABD00E852C2 /* ViewController.swift in Sources */,
+				0F16656121D32B960005F28C /* SetArrViewController.swift in Sources */,
 				0F16F44D21C0FC7600E24320 /* RotArr.swift in Sources */,
 				0F4D3B821FAAF68600E0E67F /* ImageTransferArray.swift in Sources */,
 				0FB6DD211F6A317A0035707B /* ComboCalFunc.swift in Sources */,

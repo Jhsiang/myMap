@@ -126,7 +126,6 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         var com = comboCal(comboArray: myArray)
         stepLabel.text = "\(com) c"
-        print("\(com) c")
     }
 
 //MARK: - UICollectionViewDelegateFlowLayout
@@ -156,7 +155,6 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     }
 
     @IBAction func rotationClick(_ sender: UIButton) {
-        print("rotation btn click")
         sender.titleLabel?.alpha = 0.5
         sender.isEnabled = false
         DispatchQueue.main.asyncAfter(deadline: .now()+0.01) {
