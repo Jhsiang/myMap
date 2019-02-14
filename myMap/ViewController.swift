@@ -30,7 +30,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
                             [3, 1, 0, 4, 3, 2],
                             [1, 5, 0, 5, 2, 5],
                             [3, 5, 4, 0, 4, 5]]
-    var oriArr = Array<Array<Int>>()
+
     var autoMoveStepArr = Array<Int>()
     var autoMoveStartLoc:Int? = nil
 
@@ -42,7 +42,6 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        oriArr = myArray
 
         stepLabel.numberOfLines = 0
         stepLabel.font = stepLabel.font.withSize(20)
@@ -53,22 +52,13 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         }else{
             myArray = genStartArr(noComboArr: true)
         }
-        NSLog("self.original Array  = \n[\(myArray[0]),\n\(myArray[1]),\n\(myArray[2]),\n\(myArray[3]),\n\(myArray[4])]")
+
+        DLog(message: "self.original Array  =>")
+        for row in myArray{
+            DLog(message: row)
+        }
 
         myCollectionView.addGestureRecognizer(setLongPress())
-
-        let autoClick = {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                NSLog("trigger start")
-                let myBtn = UIButton()
-                self.rotationClick(myBtn)
-                NSLog("trigger end")
-            }
-        }
-        //autoClick()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
 
     }
     
@@ -83,43 +73,19 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
 
         let xAxis : Int = indexPath.item % 6
         let yAxis : Int = indexPath.item / 6
-        var myImageViewName:String = ""
+        let imageNameArr = ["heart.png","light.png","dark.png","water.png","fire.png","wood.png"]
         let colorNumber = myArray[yAxis][xAxis]
-
-        switch colorNumber {
-        case 0:
-            myImageViewName = "heart.png"
-        case 1:
-            myImageViewName = "light.png"
-        case 2:
-            myImageViewName = "dark.png"
-        case 3:
-            myImageViewName = "water.png"
-        case 4:
-            myImageViewName = "fire.png"
-        case 5:
-            myImageViewName = "wood.png"
-        default:
-            myImageViewName = ""
-        }
-        cell.backgroundColor = .clear
-        if let image = UIImage(named: myImageViewName){
+        if let imageName = imageNameArr[safe:colorNumber], let image = UIImage(named: imageName){
             cell.IV.image = image
             cell.IV.contentMode = .scaleAspectFit
         }
-
+        cell.backgroundColor = .clear
 
         return cell
     }
-    
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
-    }
-    
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
     }
 
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
@@ -187,38 +153,16 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
             sender.titleLabel?.alpha = 1
 
             // 文字顯示結果
-            self.stepLabel.text = "Total Combo = \(displayTotalCombo), Start Location = \(displayStratLocation) \n\n step(\(displayStepArray.count)) = \(displayStepArray)"
+            self.stepLabel.text = "\(displayTotalCombo)c \(displayStepArray.count)steps"
+            //self.stepLabel.text = "Total Combo = \(displayTotalCombo), Start Location = \(displayStratLocation) \n\n step(\(displayStepArray.count)) = \(displayStepArray)"
         }
     }
 
     @IBAction func oriShowClick(_ sender: UIButton) {
-        myArray = oriArr
-        self.myCollectionView.reloadData()
-    }
-
-    func doAutoMove(){
-        var oriLoc = self.autoMoveStartLoc!
-        var stepArr = autoMoveStepArr.makeIterator()
-        let _ = Timer.scheduledTimer(withTimeInterval: Double(slider!.value), repeats: true) { (Timer) in
-            if let i = stepArr.next(){
-                self.myCollectionView.performBatchUpdates({
-                    let nextLoc = oriLoc + i
-                    (self.myArray[oriLoc/6][oriLoc%6],self.myArray[nextLoc/6][nextLoc%6]) = (self.myArray[nextLoc/6][nextLoc%6],self.myArray[oriLoc/6][oriLoc%6])
-                    self.myCollectionView.beginInteractiveMovementForItem(at: IndexPath(item: oriLoc, section: 0))
-                    let cell = self.myCollectionView.cellForItem(at: IndexPath(item: nextLoc, section: 0))!
-                    let movePoint = CGPoint(x: cell.frame.midX, y: cell.frame.midY)
-                    self.myCollectionView.updateInteractiveMovementTargetPosition(movePoint)
-                    self.myCollectionView.cancelInteractiveMovement()
-                    oriLoc = nextLoc
-                }) { (done) in
-                    if done{
-                        self.myCollectionView.reloadData()
-                    }
-                }
-            }else{
-                Timer.invalidate()
-            }
+        if let arr = Board.share.getOriArr(){
+            myArray = arr
         }
+        self.myCollectionView.reloadData()
     }
 
     @IBAction func resultShowClick(_ sender: UIButton) {
@@ -235,6 +179,59 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     @IBAction func refreshClick(_ sender: UIBarButtonItem) {
         myArray = genStartArr(noComboArr: true)
         myCollectionView.reloadData()
+    }
+
+//MARK: - My Func
+    func doAutoMove(){
+
+        // 取消使用者互動手勢
+        myCollectionView.isUserInteractionEnabled = false
+
+        // 獲得起啟位置
+        var oriLoc = self.autoMoveStartLoc!
+
+        // 獲得stepArr
+        var stepArr = autoMoveStepArr.makeIterator()
+
+        // 自動執行至stepArr 沒有資料
+        let _ = Timer.scheduledTimer(withTimeInterval: Double(slider!.value), repeats: true) { (Timer) in
+            if let i = stepArr.next(){
+                self.myCollectionView.performBatchUpdates({
+
+                    // 下一步位置
+                    let nextLoc = oriLoc + i
+
+                    // 資料交換
+                    (self.myArray[oriLoc/6][oriLoc%6],self.myArray[nextLoc/6][nextLoc%6]) = (self.myArray[nextLoc/6][nextLoc%6],self.myArray[oriLoc/6][oriLoc%6])
+
+                    // 開始位置
+                    self.myCollectionView.beginInteractiveMovementForItem(at: IndexPath(item: oriLoc, section: 0))
+
+                    // 獲得目標cell 位置
+                    let cell = self.myCollectionView.cellForItem(at: IndexPath(item: nextLoc, section: 0))!
+                    let movePoint = CGPoint(x: cell.frame.midX, y: cell.frame.midY)
+
+                    // 移動至目標cell 動畫
+                    self.myCollectionView.updateInteractiveMovementTargetPosition(movePoint)
+                    self.myCollectionView.cancelInteractiveMovement()
+
+                    // 更新下次位置
+                    oriLoc = nextLoc
+
+                }) { (done) in
+                    if done{
+                        // 每步動畫完成後 更新數據並顯示
+                        self.myCollectionView.reloadData()
+                    }
+                }
+            }else{
+                // 使用者手勢互動恢復
+                self.myCollectionView.isUserInteractionEnabled = true
+
+                // 結束動畫
+                Timer.invalidate()
+            }
+        }
     }
 
 //MARK: - UIImagePickerControllerDelegate
@@ -294,7 +291,6 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
                         self.myCollectionView.beginInteractiveMovementForItem(at: self.startIndexPath)
                         self.myCollectionView.updateInteractiveMovementTargetPosition(sender.location(in: sender.view!))
                     }
-
                 }
             }
             break
@@ -302,42 +298,18 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
             myCollectionView.endInteractiveMovement()
             let com = comboCal(comboArray: myArray)
             stepLabel.text = "\(com) c , step = \(diyStep)"
-            print("\(com) c , step = \(diyStep)")
-
-
-            /*
-            if #available(iOS 10.0, *) {
-                let timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { (myT) in
-                    if com > 0{
-
-                        self.myArray = clearUp(originalArray: self.myArray)
-                        self.myCollectionView.reloadData()
-                        com = comboCal(comboArray: self.myArray)
-                    }else{
-
-                        myT.invalidate()
-                    }
-                }
-                timer.fire()
-            } else {
-
-            }
-             */
+            DLog(message: "\(com) c , step = \(diyStep)")
             break
         default:
-
             myCollectionView.cancelInteractiveMovement()
             break
         }
     }
 
-
-
     func updateClearUpArr(){
 
     }
 
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

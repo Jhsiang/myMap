@@ -30,7 +30,7 @@ func genStartArr(noComboArr:Bool) -> [Array<Int>]
                 {
                     if resultArr[arrayHeight][arrayWidth] == resultArr[arrayHeight][arrayWidthMinus1] && resultArr[arrayHeight][arrayWidth] == resultArr[arrayHeight][arrayWidthMinus2]
                     {
-                        //NSLog("width + 1")
+                        // width + 1
                         hasCombo = true
                     }
                 }
@@ -38,7 +38,7 @@ func genStartArr(noComboArr:Bool) -> [Array<Int>]
                 {
                     if resultArr[arrayHeight][arrayWidth] == resultArr[arrayHeightMinus1][arrayWidth] && resultArr[arrayHeight][arrayWidth] == resultArr[arrayHeightMinus2][arrayWidth]
                     {
-                        //NSLog("height + 1")
+                        // height + 1
                         hasCombo = true
                     }
                 }

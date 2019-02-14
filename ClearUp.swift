@@ -70,7 +70,7 @@ func clearUp(originalArray: [Array<Int>]) -> [Array<Int>]
         }
     }
 
-    //NSLog("clearUpArray = \n\(clearUpArray[0])\n\(clearUpArray[1])\n\(clearUpArray[2])\n\(clearUpArray[3])\n\(clearUpArray[4])")
+    //DLog(message:"clearUpArray = \n\(clearUpArray[0])\n\(clearUpArray[1])\n\(clearUpArray[2])\n\(clearUpArray[3])\n\(clearUpArray[4])")
 
     return clearUpArray
 }

@@ -52,14 +52,14 @@ import UIKit
             
             if w == 11
             {
-                NSLog("color(\(x)) = \(color)\n\n")
+                DLog(message: "color(\(x)) = \(color)\n\n")
             }
             else
             {
-                NSLog("color(\(x)) = \(color)")
+                DLog(message: "color(\(x)) = \(color)")
             }
         }
-        NSLog("Load Array = \n\(loadArray[0])\n\(loadArray[1])\n\(loadArray[2])\n\(loadArray[3])\n\(loadArray[4])")
+        DLog(message: "Load Array = \n\(loadArray[0])\n\(loadArray[1])\n\(loadArray[2])\n\(loadArray[3])\n\(loadArray[4])")
         
         return loadArray
     }

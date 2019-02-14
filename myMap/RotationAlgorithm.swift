@@ -31,14 +31,14 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (routeArr:Array<Int>,sLoc:Int
     {
         if oneCycle == 31 || oneCycle == 61 || oneCycle == 91
         {
-            NSLog("oneCycle = \(oneCycle) count = \(count)")
+            DLog(message:"oneCycle = \(oneCycle) count = \(count)")
             targetComboNumbers -= 1
-            NSLog("targetComboNumbers = \(targetComboNumbers)")
+            DLog(message:"targetComboNumbers = \(targetComboNumbers)")
         }
         // 目標判定
         if totalCombo >= targetComboNumbers && (totalRouteSave.count <= MAX_TOTAL_STEP)
         {
-            NSLog("totalCombo = \(totalCombo) targetComboNumbers = \(targetComboNumbers)")
+            DLog(message:"totalCombo = \(totalCombo) targetComboNumbers = \(targetComboNumbers)")
             // 中斷for 迴圈
             break
         }
@@ -128,7 +128,7 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (routeArr:Array<Int>,sLoc:Int
                 count += interruptCount
                 interruptCount = 0
 
-                //if totalCombo != 0 {NSLog("total combo =\(totalCombo)");NSLog("count = \(count)")}
+                //if totalCombo != 0 {DLog(message:"total combo =\(totalCombo)");DLog(message:"count = \(count)")}
 
                 // 更新盤面起始位置
                 nextStartLocation = nowLocation
@@ -142,36 +142,13 @@ func rotationFunc(inputArray:Array<Array<Int>>) -> (routeArr:Array<Int>,sLoc:Int
         }
     }
 
-/*
-    for x in 0...totalRouteSave.count-1
-    {
-        switch totalRouteSave[x] {
-        case RIGHT as Int:
-            totalRouteSave[x] = "right"
-        case LEFT as Int:
-            totalRouteSave[x] = "left"
-        case DOWN as Int:
-            totalRouteSave[x] = "down"
-        case UP as Int:
-            totalRouteSave[x] = "up"
-        default:
-            totalRouteSave[x] = "?"
-        }
-    }
-*/
-    //NSLog("StartLocation = \(startLocation)")
-    //NSLog("nextStartLocation = \(nextStartLocation)")
-    //NSLog("total route(\(totalRouteSave.count)) = \(totalRouteSave)")
-
     // 迴圈執行數目
-    NSLog("self.count = \(count)")
-    NSLog("self.totalCombo1 = \(totalCombo)")
-    NSLog("step count = \(totalRouteSave.count)")
-    //totalCombo = comboCal(comboArray: myInputArray)
-    //NSLog("self.totalCombo2 = \(totalCombo)")
+    DLog(message:"self.count = \(count)")
+    DLog(message:"self.totalCombo1 = \(totalCombo)")
+    DLog(message:"step count = \(totalRouteSave.count)")
 
     // 重組後陣列
-    NSLog("self.original Array2 = \n\(myInputArray[0])\n\(myInputArray[1])\n\(myInputArray[2])\n\(myInputArray[3])\n\(myInputArray[4])")
+    DLog(message:"self.original Array2 = \n\(myInputArray[0])\n\(myInputArray[1])\n\(myInputArray[2])\n\(myInputArray[3])\n\(myInputArray[4])")
     resArr = myInputArray
 
     return (totalRouteSave,startLocation,totalCombo,resArr)
@@ -200,62 +177,63 @@ func rotAlgo(inputArray:Array<Array<Int>>) -> (routeArr:Array<Int>,sLoc:Int,comb
     //let sRandArr = [0,5,24,29]
     var count = 0
 
-    NSLog("Start time1")
+    DLog(message:"Start time1")
     myBigLoop:while combo < TARGET_COMBO_NUMBERS {
 
         // 開始位置
         if saveArr.count < 8{
-        sLoc = Int.random(in: 0..<30)//sRandArr.randomElement()!
+            sLoc = Int.random(in: 0..<30)//sRandArr.randomElement()!
 
-        let aa = startRotation(originalArray: inputArray, startLocation: sLoc, stepFrom: 8, stepTo: 9) //step 6 ~ 15 every 700count
-        count += 1
-        combo = comboCal(comboArray: aa.resultArr)
+            let aa = startRotation(originalArray: inputArray, startLocation: sLoc, stepFrom: 8, stepTo: 9) //step 6 ~ 15 every 700count
+            count += 1
+            combo = comboCal(comboArray: aa.resultArr)
 
-        if combo > 2{
-            sLocArr.append(sLoc)
-            nextLocArr.append(aa.nowLoc)
-            saveArr.append(aa.resultArr)
-            totalRouteSaveArr.append(aa.routeSave)
-            comboArr.append(combo)
+            if combo > 2{
+                sLocArr.append(sLoc)
+                nextLocArr.append(aa.nowLoc)
+                saveArr.append(aa.resultArr)
+                totalRouteSaveArr.append(aa.routeSave)
+                comboArr.append(combo)
 
-            // Debug
-            /*
-            for loc in 0..<totalRouteSaveArr.count{
-                print("com = \(comboArr[loc]) rout = \(totalRouteSaveArr[loc]) sLoc = \(sLocArr[loc]) ")
-                simResultArr(route: totalRouteSaveArr[loc], startLoc: sLocArr[loc])
+                // Debug
+                /*
+                 for loc in 0..<totalRouteSaveArr.count{
+                 DLog(message:"com = \(comboArr[loc]) rout = \(totalRouteSaveArr[loc]) sLoc = \(sLocArr[loc]) ")
+                 simResultArr(route: totalRouteSaveArr[loc], startLoc: sLocArr[loc])
+                 }
+                 */
             }
-            */
-        }
         }
 
-            for x in 0..<saveArr.count{
-                let bb = startRotation(originalArray: saveArr[x], startLocation: nextLocArr[x], stepFrom: 4, stepTo: 7)
-                let combo = comboCal(comboArray: bb.resultArr)
+        for x in 0..<saveArr.count{
+            let bb = startRotation(originalArray: saveArr[x], startLocation: nextLocArr[x], stepFrom: 4, stepTo: 7)
+            let combo = comboCal(comboArray: bb.resultArr)
 
-                count += 1
-                if count >= 10000{
+            count += 1
+            if count >= 10000{
+                break myBigLoop
+            }
+
+            if combo > comboArr[x]{
+                saveArr[x] = bb.resultArr
+                nextLocArr[x] = bb.nowLoc
+
+                for y in bb.routeSave{
+                    totalRouteSaveArr[x].append(y)
+                }
+                comboArr[x] = combo
+
+                if combo >= TARGET_COMBO_NUMBERS{
                     break myBigLoop
                 }
 
-                if combo > comboArr[x]{
-                    saveArr[x] = bb.resultArr
-                    nextLocArr[x] = bb.nowLoc
-
-                    for y in bb.routeSave{
-                        totalRouteSaveArr[x].append(y)
-                    }
-                    comboArr[x] = combo
-
-                    if combo >= TARGET_COMBO_NUMBERS{
-                        break myBigLoop
-                    }
-
-                }
             }
+        }
 
     }
-    NSLog("end time2")
+    DLog(message:"end time2")
 
+    // 找出最大combo 的位置(複數)
     var newArrLocArr = Array<Int>()
     for i in 0...TARGET_COMBO_NUMBERS{
         if newArrLocArr.count == 0 {
@@ -267,12 +245,13 @@ func rotAlgo(inputArray:Array<Array<Int>>) -> (routeArr:Array<Int>,sLoc:Int,comb
         }
     }
 
-    print("full condition count = ",newArrLocArr.count)
+    DLog(message:"full condition count = \(newArrLocArr.count)")
 
+    // 從最大combo 中找出最小步數
     var step = 60
     var myMinStepLoc = 0
     for fullConditionLoc in newArrLocArr{
-        NSLog("full con total step arr = \(totalRouteSaveArr[fullConditionLoc].count)")
+        DLog(message:"full con total step arr = \(totalRouteSaveArr[fullConditionLoc].count)")
         if totalRouteSaveArr[fullConditionLoc].count <= step{
             step = totalRouteSaveArr[fullConditionLoc].count
             myMinStepLoc = fullConditionLoc
@@ -285,24 +264,29 @@ func rotAlgo(inputArray:Array<Array<Int>>) -> (routeArr:Array<Int>,sLoc:Int,comb
     combo = comboArr[myMinStepLoc]
 
     // 迴圈執行數目
-    NSLog("sav arr = \(saveArr.count)")
-    NSLog("self.totalCombo1 = \(combo)")
-    NSLog("sloc = \(sLoc)")
-    NSLog("step count = \(routeArr.count)")
-    NSLog("step = \(routeArr)")
-    NSLog("count = \(count)")
+    DLog(message:"sav arr = \(saveArr.count)")
+    DLog(message:"self.totalCombo1 = \(combo)")
+    DLog(message:"sloc = \(sLoc)")
+    DLog(message:"step count = \(routeArr.count)")
+    DLog(message:"step = \(routeArr)")
+    DLog(message:"count = \(count)")
 
-
-    // Temp
+    // 顯示最後位置(測試用)
     var tempTest = sLoc
     for x in routeArr{
         tempTest += x
     }
-    NSLog("finial Loc = \(tempTest)")
+    DLog(message:"finial Loc = \(tempTest)")
 
     // 重組後陣列
-    NSLog("self.original Array2 = \n\(resultArr[0])\n\(resultArr[1])\n\(resultArr[2])\n\(resultArr[3])\n\(resultArr[4])\n")
-    simResultArr(arr:inputArray,route: routeArr, startLoc: sLoc)
+    DLog(message:"self.original Array2 =>")
+    for row in resultArr{
+        DLog(message: row)
+    }
+
+    // 模擬結果
+    //simResultArr(arr:inputArray,route: routeArr, startLoc: sLoc)
+
     return (routeArr,sLoc,combo,resultArr)
 }
 
@@ -334,8 +318,8 @@ func simResultArr(arr:Array<Array<Int>>,route:Array<Int>,startLoc:Int){
         start = next
     }
     for x in resultArr{
-        print(x)
+        DLog(message:x)
     }
-    print("c = ",comboCal(comboArray: resultArr))
+    DLog(message:"c = \(comboCal(comboArray: resultArr))")
 }
 
