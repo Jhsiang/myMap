@@ -16,6 +16,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     @IBOutlet var myCollectionView: UICollectionView!
 
     @IBOutlet var stepLabel: UILabel!
+    @IBOutlet var slider: UISlider!
 
 
     let fullScreenSize = UIScreen.main.bounds.size
@@ -29,7 +30,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
                             [3, 1, 0, 4, 3, 2],
                             [1, 5, 0, 5, 2, 5],
                             [3, 5, 4, 0, 4, 5]]
-    var resultArr = Array<Array<Int>>()
+    var oriArr = Array<Array<Int>>()
     var autoMoveStepArr = Array<Int>()
     var autoMoveStartLoc:Int? = nil
 
@@ -37,11 +38,11 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     var startIndexPath = IndexPath()
     var diyStep = 0
 
-    var showResultArr = false
     var imagePicker: UIImagePickerController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        oriArr = myArray
 
         stepLabel.numberOfLines = 0
         stepLabel.font = stepLabel.font.withSize(20)
@@ -77,13 +78,13 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("cell = \(indexPath.item)")
+
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell_ball2", for: indexPath) as! Ball2CollectionViewCell
 
         let xAxis : Int = indexPath.item % 6
         let yAxis : Int = indexPath.item / 6
         var myImageViewName:String = ""
-        let colorNumber = showResultArr ? resultArr[yAxis][xAxis] : myArray[yAxis][xAxis]
+        let colorNumber = myArray[yAxis][xAxis]
 
         switch colorNumber {
         case 0:
@@ -126,7 +127,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        var com = comboCal(comboArray: myArray)
+        let com = comboCal(comboArray: myArray)
         stepLabel.text = "\(com) c"
     }
 
@@ -146,7 +147,13 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-    
+
+//MARK: - Slider
+    @IBAction func sliderChange(_ sender: UISlider) {
+        let step:Float = 0.1
+        sender.value = round(sender.value / step) * step
+    }
+
 //MARK: - Button click
     @IBAction func loadPicBtn(_ sender: UIBarButtonItem)
     {
@@ -163,49 +170,59 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
             var displayStepArray = Array<Int>()
             var displayStratLocation:Int
             var displayTotalCombo:Int
+            var resultArr = [[Int]]()
+
+            // 舊方法
             //(displayStepArray,displayStratLocation,displayTotalCombo,self.resultArr) = rotationFunc(inputArray: self.myArray)
-            (displayStepArray,displayStratLocation,displayTotalCombo,self.resultArr) = rotAlgo(inputArray: self.myArray)
+
+            // 新方法
+            (displayStepArray,displayStratLocation,displayTotalCombo,resultArr) = rotAlgo(inputArray: self.myArray)
+
+            // 儲存自動步驟
             self.autoMoveStepArr = displayStepArray
             self.autoMoveStartLoc = displayStratLocation
+
+            // 按鈕恢復
             sender.isEnabled = true
             sender.titleLabel?.alpha = 1
+
+            // 文字顯示結果
             self.stepLabel.text = "Total Combo = \(displayTotalCombo), Start Location = \(displayStratLocation) \n\n step(\(displayStepArray.count)) = \(displayStepArray)"
         }
     }
 
     @IBAction func oriShowClick(_ sender: UIButton) {
-        showResultArr = false
+        myArray = oriArr
         self.myCollectionView.reloadData()
     }
 
     func doAutoMove(){
+        var oriLoc = self.autoMoveStartLoc!
         var stepArr = autoMoveStepArr.makeIterator()
-        let _ = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { (Timer) in
+        let _ = Timer.scheduledTimer(withTimeInterval: Double(slider!.value), repeats: true) { (Timer) in
             if let i = stepArr.next(){
                 self.myCollectionView.performBatchUpdates({
-                    let oriLoc = self.autoMoveStartLoc!
-                    let nextLoc = self.autoMoveStartLoc! + i
+                    let nextLoc = oriLoc + i
                     (self.myArray[oriLoc/6][oriLoc%6],self.myArray[nextLoc/6][nextLoc%6]) = (self.myArray[nextLoc/6][nextLoc%6],self.myArray[oriLoc/6][oriLoc%6])
                     self.myCollectionView.beginInteractiveMovementForItem(at: IndexPath(item: oriLoc, section: 0))
                     let cell = self.myCollectionView.cellForItem(at: IndexPath(item: nextLoc, section: 0))!
                     let movePoint = CGPoint(x: cell.frame.midX, y: cell.frame.midY)
                     self.myCollectionView.updateInteractiveMovementTargetPosition(movePoint)
                     self.myCollectionView.cancelInteractiveMovement()
-                    self.autoMoveStartLoc = nextLoc
+                    oriLoc = nextLoc
                 }) { (done) in
                     if done{
                         self.myCollectionView.reloadData()
                     }
                 }
             }else{
-                print("end")
                 Timer.invalidate()
             }
         }
     }
 
     @IBAction func resultShowClick(_ sender: UIButton) {
-        if self.resultArr.count == 5{
+        if !self.autoMoveStepArr.isEmpty && autoMoveStartLoc != nil{
             self.doAutoMove()
         }else{
             let alert = UIAlertController(title: "錯誤", message: "資料為空", preferredStyle: UIAlertControllerStyle.alert)
@@ -283,7 +300,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
             break
         case .ended:
             myCollectionView.endInteractiveMovement()
-            var com = comboCal(comboArray: myArray)
+            let com = comboCal(comboArray: myArray)
             stepLabel.text = "\(com) c , step = \(diyStep)"
             print("\(com) c , step = \(diyStep)")
 
