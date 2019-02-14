@@ -30,6 +30,8 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
                             [1, 5, 0, 5, 2, 5],
                             [3, 5, 4, 0, 4, 5]]
     var resultArr = Array<Array<Int>>()
+    var autoMoveStepArr = Array<Int>()
+    var autoMoveStartLoc:Int? = nil
 
     var moveArr = Array<Array<Int>>()
     var startIndexPath = IndexPath()
@@ -75,7 +77,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        print("cell = \(indexPath.item)")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell_ball2", for: indexPath) as! Ball2CollectionViewCell
 
         let xAxis : Int = indexPath.item % 6
@@ -163,6 +165,8 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
             var displayTotalCombo:Int
             //(displayStepArray,displayStratLocation,displayTotalCombo,self.resultArr) = rotationFunc(inputArray: self.myArray)
             (displayStepArray,displayStratLocation,displayTotalCombo,self.resultArr) = rotAlgo(inputArray: self.myArray)
+            self.autoMoveStepArr = displayStepArray
+            self.autoMoveStartLoc = displayStratLocation
             sender.isEnabled = true
             sender.titleLabel?.alpha = 1
             self.stepLabel.text = "Total Combo = \(displayTotalCombo), Start Location = \(displayStratLocation) \n\n step(\(displayStepArray.count)) = \(displayStepArray)"
@@ -174,10 +178,35 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         self.myCollectionView.reloadData()
     }
 
+    func doAutoMove(){
+        var stepArr = autoMoveStepArr.makeIterator()
+        let _ = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { (Timer) in
+            if let i = stepArr.next(){
+                self.myCollectionView.performBatchUpdates({
+                    let oriLoc = self.autoMoveStartLoc!
+                    let nextLoc = self.autoMoveStartLoc! + i
+                    (self.myArray[oriLoc/6][oriLoc%6],self.myArray[nextLoc/6][nextLoc%6]) = (self.myArray[nextLoc/6][nextLoc%6],self.myArray[oriLoc/6][oriLoc%6])
+                    self.myCollectionView.beginInteractiveMovementForItem(at: IndexPath(item: oriLoc, section: 0))
+                    let cell = self.myCollectionView.cellForItem(at: IndexPath(item: nextLoc, section: 0))!
+                    let movePoint = CGPoint(x: cell.frame.midX, y: cell.frame.midY)
+                    self.myCollectionView.updateInteractiveMovementTargetPosition(movePoint)
+                    self.myCollectionView.cancelInteractiveMovement()
+                    self.autoMoveStartLoc = nextLoc
+                }) { (done) in
+                    if done{
+                        self.myCollectionView.reloadData()
+                    }
+                }
+            }else{
+                print("end")
+                Timer.invalidate()
+            }
+        }
+    }
+
     @IBAction func resultShowClick(_ sender: UIButton) {
-        if resultArr.count == 5{
-            showResultArr = true
-            self.myCollectionView.reloadData()
+        if self.resultArr.count == 5{
+            self.doAutoMove()
         }else{
             let alert = UIAlertController(title: "錯誤", message: "資料為空", preferredStyle: UIAlertControllerStyle.alert)
             let okAction = UIAlertAction(title: "確認", style: .cancel, handler: nil)

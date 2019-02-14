@@ -267,11 +267,12 @@ func rotAlgo(inputArray:Array<Array<Int>>) -> (routeArr:Array<Int>,sLoc:Int,comb
         }
     }
 
-    print("full condition count = ",comboArr.count)
+    print("full condition count = ",newArrLocArr.count)
 
     var step = 60
     var myMinStepLoc = 0
     for fullConditionLoc in newArrLocArr{
+        NSLog("full con total step arr = \(totalRouteSaveArr[fullConditionLoc].count)")
         if totalRouteSaveArr[fullConditionLoc].count <= step{
             step = totalRouteSaveArr[fullConditionLoc].count
             myMinStepLoc = fullConditionLoc
