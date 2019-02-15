@@ -34,7 +34,7 @@ func DLog<T> (message: T, fileName: String = #file, funcName: String = #function
     let sendDate = Date()
     let timeStr = dateFormatter.string(from: sendDate)
 
-    print("\(timeStr) \(file) \(funcName)-[\(lineNum)]: \(message)")
+    //print("\(timeStr) \(file) \(funcName)-[\(lineNum)]: \(message)")
 
     #endif
 

@@ -17,7 +17,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
 
     @IBOutlet var stepLabel: UILabel!
     @IBOutlet var slider: UISlider!
-
+    @IBOutlet var speedLabel: UILabel!
 
     let fullScreenSize = UIScreen.main.bounds.size
     var myArray3: Array =  [[2, 3, 1, 5, 3, 4], //difficult arr
@@ -45,6 +45,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
 
         stepLabel.numberOfLines = 0
         stepLabel.font = stepLabel.font.withSize(20)
+        speedLabel.text = "速度(\(slider.value)s)"
 
         // Generate start array
         if let arr = Board.share.getOriArr(){
@@ -118,6 +119,8 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     @IBAction func sliderChange(_ sender: UISlider) {
         let step:Float = 0.1
         sender.value = round(sender.value / step) * step
+        let speedStr = String(format: "%.1f", sender.value)
+        speedLabel.text = "速度(\(speedStr)s)"
     }
 
 //MARK: - Button click
@@ -185,7 +188,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     func doAutoMove(){
 
         // 取消使用者互動手勢
-        myCollectionView.isUserInteractionEnabled = false
+        self.view.window?.isUserInteractionEnabled = false
 
         // 獲得起啟位置
         var oriLoc = self.autoMoveStartLoc!
@@ -226,7 +229,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
                 }
             }else{
                 // 使用者手勢互動恢復
-                self.myCollectionView.isUserInteractionEnabled = true
+                self.view.window?.isUserInteractionEnabled = true
 
                 // 結束動畫
                 Timer.invalidate()
@@ -242,7 +245,6 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         let inputImageArray = imageToArray(imputImage: image)
         self.myArray = inputImageArray
         self.myCollectionView.reloadData()
-
         
         //退出
         picker.dismiss(animated: true, completion:nil)

@@ -139,9 +139,9 @@ class SetArrayViewController: UIViewController,UICollectionViewDelegate,UICollec
             reusableView.backgroundColor = UIColor.darkGray
 
             if indexPath.section == 0{
-                label.text = "Original"
+                label.text = "盤面設定"
             }else if indexPath.section == 1{
-                label.text = "Selector"
+                label.text = "選擇顏色"
             }
             label.textColor = UIColor.white
         }
