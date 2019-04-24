@@ -156,7 +156,18 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
             sender.titleLabel?.alpha = 1
 
             // 文字顯示結果
-            self.stepLabel.text = "\(displayTotalCombo)c \(displayStepArray.count)steps"
+            let dirStr = displayStepArray.map{String($0)}.joined(separator: "").replacingOccurrences(of: "-6", with: "↑").replacingOccurrences(of: "-1", with: "←").replacingOccurrences(of: "6", with: "↓").replacingOccurrences(of: "1", with: "→")
+            var testArr = [String]()
+            var str = ""
+            for c in dirStr{
+                if str.count >= 5{
+                    testArr.append(str)
+                    str = ""
+                }
+                str.append(c)
+            }
+            testArr.append(str)
+            self.stepLabel.text = "\(displayTotalCombo)c \(displayStepArray.count)steps \n startLoc = \(displayStratLocation)\n step = \(testArr)"
             //self.stepLabel.text = "Total Combo = \(displayTotalCombo), Start Location = \(displayStratLocation) \n\n step(\(displayStepArray.count)) = \(displayStepArray)"
         }
     }
